@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>درس‌یار</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1F3A5F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="درس‌یار">
+<script>window.DARSYAR_WEB=true;if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js'))</script>
+
+<style>
+@font-face{font-family:Vazirmatn;src:url(fonts/Vazirmatn-Regular.woff2) format('woff2');font-weight:400}
+@font-face{font-family:Vazirmatn;src:url(fonts/Vazirmatn-Medium.woff2) format('woff2');font-weight:500}
+@font-face{font-family:Vazirmatn;src:url(fonts/Vazirmatn-Bold.woff2) format('woff2');font-weight:700}
+:root{--ink:#1B2433;--muted:#6B7686;--bg:#F3F5F8;--card:#fff;--line:#E6E9EF;--soft:#EEF1F5;--seg:#E7EBF1;--brand:#1F3A5F;--head:#1F3A5F;--accent:#F2A93B;--ok:#2E9E6B;--warn:#E08A1E;--bad:#D64545;color-scheme:light}
+:root[data-theme=dark]{--ink:#E6EAF0;--muted:#97A2B3;--bg:#0E141D;--card:#18202C;--line:#283243;--soft:#222C3B;--seg:#141B25;--brand:#5B8CD6;--head:#16263D;color-scheme:dark}
+[data-theme=dark] .p-ok{background:#16362A}[data-theme=dark] .p-warn{background:#3A2A12}[data-theme=dark] .p-bad{background:#3B1A1C}
+[data-theme=dark] .btn:not(.ghost):not(.danger){background:#2B4C7A}[data-theme=dark] .btn.danger{background:#3B1A1C}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,sans-serif;font-size:15px}
+body{max-width:620px;margin:0 auto;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+header{background:var(--head);color:#fff;padding:calc(16px + env(safe-area-inset-top)) 16px 52px;position:relative}
+header h1{margin:0;font-size:20px;font-weight:700}
+header .sub{opacity:.75;font-size:13px;margin-top:2px}
+.hact{position:absolute;left:12px;top:calc(14px + env(safe-area-inset-top));display:flex;gap:6px;align-items:center}
+.sync{font-size:12px;background:rgba(255,255,255,.14);padding:5px 10px;border-radius:99px;display:flex;gap:6px;align-items:center}
+.sync i{width:8px;height:8px;border-radius:50%;background:#9AA5B5;display:inline-block}
+.sync.ok i{background:#5BD69B}.sync.fail i,.sync.badpin i{background:#FF7B7B}.sync.busy i{background:var(--accent)}
+.ib{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:10px;padding:6px 11px;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:-38px 16px 4px;position:relative}
+.stat{background:var(--card);border-radius:14px;padding:11px 10px;box-shadow:0 2px 8px rgba(20,30,50,.06);border:0;text-align:right}
+.stat b{display:block;font-size:19px;font-weight:700}
+.stat span{font-size:11.5px;color:var(--muted)}
+main{padding:0 16px 150px}
+.sec{font-size:13px;color:var(--muted);margin:18px 2px 8px;font-weight:500;display:flex;justify-content:space-between;align-items:center}
+.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:0 1px 4px rgba(20,30,50,.05);border-right:5px solid var(--c,var(--brand))}
+.card.flat{border-right:0}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.name{font-weight:700;font-size:16px}
+.meta{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.7}
+.pill{font-size:12px;padding:3px 9px;border-radius:99px;font-weight:500;white-space:nowrap}
+.p-ok{background:#E3F4EC;color:var(--ok)}.p-warn{background:#FCEFD9;color:var(--warn)}.p-bad{background:#FBE3E3;color:var(--bad)}.p-mute{background:var(--soft);color:var(--muted)}
+.bar{height:7px;background:var(--soft);border-radius:99px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--c,var(--brand))}
+.pct{font-size:12px;color:var(--muted);margin-top:4px;display:flex;justify-content:space-between}
+.hero{background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 70%,#000));color:#fff;border-radius:16px;padding:16px;margin-bottom:10px}
+.hero .meta{color:rgba(255,255,255,.8)}
+.hero .big{font-size:22px;font-weight:700;margin:2px 0}
+.fab{position:fixed;left:max(18px,calc(50vw - 292px));bottom:82px;width:56px;height:56px;border-radius:18px;border:0;background:var(--accent);color:#1B2433;font-size:30px;box-shadow:0 6px 16px rgba(242,169,59,.45);z-index:5}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;max-width:620px;margin:0 auto;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:6;padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{border:0;background:none;padding:9px 0 8px;font-size:11.5px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabs button b{font-size:19px;font-weight:400;line-height:1}
+nav.tabs button.on{color:var(--brand);font-weight:700}
+.empty{text-align:center;color:var(--muted);padding:40px 16px}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px}
+.top{background:var(--c);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 12px 50px}
+.top .row{align-items:flex-start}
+.top h2{margin:6px 4px 0;font-size:22px}
+.top .meta{color:rgba(255,255,255,.82);margin:2px 4px 0}
+.next{display:inline-flex;gap:6px;align-items:center;background:rgba(255,255,255,.16);border-radius:10px;padding:6px 10px;margin:10px 4px 0;font-size:13px}
+.qs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:-38px 12px 0;position:relative}
+.qs .stat{padding:10px 8px}.qs .stat b{font-size:17px}
+.itabs{display:flex;gap:4px;background:var(--seg);border-radius:12px;padding:4px;margin:14px 0 4px}
+.itabs button{flex:1;border:0;background:none;border-radius:9px;padding:8px 2px;font-size:13px;color:var(--muted)}
+.itabs button.on{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.block{background:var(--card);border-radius:14px;padding:14px;margin-top:12px}
+.block h3{margin:0 0 10px;font-size:14px;color:var(--muted);font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bignum{font-size:30px;font-weight:700;color:var(--c)}
+input[type=range]{width:100%;accent-color:var(--c,var(--brand));height:28px}
+.item{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.block h3+.item,.item:first-child{border-top:0}
+.item .t{flex:1;min-width:0}
+.item .t .tt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item.done .tt{text-decoration:line-through;color:var(--muted)}
+.chk{width:24px;height:24px;border-radius:7px;border:2px solid var(--line);background:var(--card);flex:none;display:grid;place-items:center;color:#fff;font-size:14px;padding:0}
+.done>.chk,.chk.on{background:var(--ok);border-color:var(--ok)}
+.x{border:0;background:none;color:var(--muted);font-size:19px;padding:2px 6px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--c)}
+.ficon{width:36px;height:36px;border-radius:9px;background:var(--soft);display:grid;place-items:center;font-size:10.5px;font-weight:700;color:var(--brand);flex:none}
+.btn{border:0;border-radius:11px;padding:11px 16px;background:var(--brand);color:#fff;font-weight:500}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn.small{padding:6px 11px;font-size:12.5px;border-radius:9px}
+.btn.danger{color:var(--bad);background:#FBE3E3}
+.addrow{display:flex;gap:8px;margin-top:8px}.addrow input{flex:1}
+input[type=text],input[type=number],input[type=time],input[type=email],input[type=search],select,textarea{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;background:var(--card);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--brand)}
+textarea{min-height:76px;resize:vertical;line-height:1.7}
+.sheet-bg{position:fixed;inset:0;background:rgba(15,22,35,.45);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet{background:var(--bg);width:100%;max-width:620px;border-radius:20px 20px 0 0;padding:18px 16px 22px;max-height:92vh;overflow:auto}
+.sheet h2{margin:0 0 6px;font-size:18px}
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
+label.cb{display:flex;gap:8px;align-items:center;color:var(--ink)}
+.g3{display:grid;grid-template-columns:1.2fr 1.6fr 1fr;gap:6px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.colors{display:flex;gap:10px;flex-wrap:wrap}
+.colors button{width:34px;height:34px;border-radius:50%;border:3px solid transparent}
+.colors button.on{border-color:var(--ink)}
+.actions{display:flex;gap:8px;margin-top:18px}.actions .btn{flex:1}
+.seg{display:flex;background:var(--seg);border-radius:11px;padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:none;border-radius:8px;padding:8px;font-size:13.5px;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:700}
+.seg button.on.bad{color:var(--bad)}
+.hidden{display:none!important}
+.ltr{direction:ltr;unicode-bidi:isolate}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:var(--card);border-radius:14px;padding:10px}
+.cal .h{text-align:center;font-size:12px;color:var(--muted);padding:4px 0}
+.cal button{border:0;background:none;border-radius:10px;min-height:48px;padding:5px 0 4px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:14px}
+.cal button.today{background:var(--soft);font-weight:700;color:var(--brand)}
+.cal button.sel{background:var(--brand);color:#fff}
+.cal button.off{color:var(--muted);opacity:.5}
+.cal button.fri{color:var(--bad)}
+.cal button.sel.fri{color:#fff}
+.cal .ds{display:flex;gap:2px;height:6px}.cal .ds i{width:6px;height:6px;border-radius:50%;background:var(--c)}
+.mhead{display:flex;align-items:center;justify-content:space-between;margin:14px 0 10px}
+.mhead b{font-size:17px}
+.tag{font-size:11px;padding:2px 7px;border-radius:6px;background:#EEF1F5;color:var(--muted)}
+.cancel{opacity:.55}.cancel .tt{text-decoration:line-through}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1B2433;color:#fff;padding:10px 16px;border-radius:12px;font-size:13.5px;z-index:30}
+a{color:var(--brand)}
+.drawer-bg{position:fixed;inset:0;background:rgba(10,15,25,.5);z-index:25;display:flex;justify-content:flex-start}
+.drawer{background:var(--bg);width:min(320px,84vw);height:100%;padding:0 0 20px;overflow:auto;animation:din .18s ease-out}
+@keyframes din{from{transform:translateX(100%)}to{transform:none}}
+.drawer .dh{background:var(--head);color:#fff;padding:22px 18px 18px}
+.drawer .dh b{font-size:19px;display:block}
+.drawer button.mi{display:flex;width:100%;gap:12px;align-items:center;border:0;background:none;padding:15px 18px;font-size:15px;text-align:right;border-bottom:1px solid var(--line)}
+.drawer button.mi i{font-style:normal;width:26px;text-align:center;font-size:19px}
+.drawer button.mi small{display:block;color:var(--muted);font-size:12px}
+.code{background:var(--soft);border-radius:12px;padding:12px;font-size:12.5px;line-height:1.8;max-height:220px;overflow:auto;white-space:pre-wrap;direction:rtl}
+.steps{counter-reset:st;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:st;display:flex;gap:10px;margin:12px 0;line-height:1.7}
+.steps li:before{content:counter(st);flex:none;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:700}
+.colors input[type=color]{width:34px;height:34px;border:0;padding:0;border-radius:50%;background:none}
+.sug{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}.sug:first-of-type{border-top:0}
+.sug .e{font-size:20px;line-height:1.3}
+.pin{font-size:34px;font-weight:700;letter-spacing:6px;text-align:center;background:var(--card);border-radius:14px;padding:14px;direction:ltr}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ===== Jalali =====
+function div(a,b){return ~~(a/b)}
+function j2g(jy,jm,jd){jy+=1595;let days=-355668+365*jy+div(jy,33)*8+div((jy%33)+3,4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186);let gy=400*div(days,146097);days%=146097;if(days>36524){gy+=100*div(--days,36524);days%=36524;if(days>=365)days++}gy+=4*div(days,1461);days%=1461;if(days>365){gy+=div(days-1,365);days=(days-1)%365}let gd=days+1;const sal=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];let gm=0;for(;gm<13&&gd>sal[gm];gm++)gd-=sal[gm];return[gy,gm,gd]}
+function g2j(gy,gm,gd){const g=[0,31,59,90,120,151,181,212,243,273,304,334];let gy2=gm>2?gy+1:gy;let days=355666+365*gy+div(gy2+3,4)-div(gy2+99,100)+div(gy2+399,400)+gd+g[gm-1];let jy=-1595+33*div(days,12053);days%=12053;jy+=4*div(days,1461);days%=1461;if(days>365){jy+=div(days-1,365);days=(days-1)%365}const jm=days<186?1+div(days,31):7+div(days-186,30);const jd=1+(days<186?days%31:(days-186)%30);return[jy,jm,jd]}
+const MONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const DAYS=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+const fa=n=>String(n??'').replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const p2=n=>String(n).padStart(2,'0');
+const isoOf=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
+const dOf=iso=>{const[y,m,d]=iso.split('-').map(Number);return new Date(y,m-1,d)};
+const addD=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const today=()=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate())};
+const TODAY=()=>isoOf(today());
+const pday=d=>(d.getDay()+1)%7;
+const jOf=iso=>{const[y,m,d]=iso.split('-').map(Number);return g2j(y,m,d)};
+const isoJ=(jy,jm,jd)=>{const[g,m,d]=j2g(jy,jm,jd);return g+'-'+p2(m)+'-'+p2(d)};
+function jLabel(iso,withDay){if(!iso)return'بدون تاریخ';const[y,m,d]=jOf(iso);return(withDay?DAYS[pday(dOf(iso))]+' ':'')+fa(d)+' '+MONTHS[m-1]+(withDay?'':' '+fa(y))}
+function daysLeft(iso){if(!iso)return null;return Math.round((dOf(iso)-today())/864e5)}
+function rel(iso){const d=daysLeft(iso);if(d===0)return'امروز';if(d===1)return'فردا';if(d===-1)return'دیروز';if(d>1&&d<7)return DAYS[pday(dOf(iso))];return jLabel(iso,true)}
+const mlen=(jy,jm)=>jm<=6?31:jm<=11?30:(daysLeft(isoJ(jy+1,1,1))-daysLeft(isoJ(jy,12,1)));
+
+// ===== Data =====
+const KEYS=['courses','exams','slots','sessions','tasks','offdays','meta'];
+const COLORS=['#1F3A5F','#2E9E6B','#7A4FD1','#D64545','#E08A1E','#1E8FB5','#C2417F','#5B6B7F','#0F766E','#4F46E5','#B45309','#BE123C','#15803D','#9333EA','#0369A1','#A16207','#DB2777','#334155','#65A30D','#0891B2'];
+const EXAM_TYPES=['میان‌ترم','پایان‌ترم','کوییز','پروژه','دیگر'];
+const PHONE=!!window.Android,WEB=!PHONE&&!!window.DARSYAR_WEB,LOCAL=PHONE||WEB;
+let S={},FILES={};
+const NOW=()=>Date.now();
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const norm=s=>{s=s||{};KEYS.forEach(k=>{if(!Array.isArray(s[k]))s[k]=[]});return s};
+function merge(a,b){const o={};KEYS.forEach(k=>{const m=new Map();[...(a[k]||[]),...(b[k]||[])].forEach(r=>{if(!r||!r.id)return;const x=m.get(r.id);if(!x||(+r.u||0)>(+x.u||0))m.set(r.id,r)});o[k]=[...m.values()]});return o}
+const live=k=>S[k].filter(r=>!r.del&&!(k==='courses'&&r.archived));
+const get=(k,id)=>S[k].find(r=>r.id===id&&!r.del&&!(k==='courses'&&r.archived));
+const course=id=>get('courses',id);
+const ofC=(k,cid)=>live(k).filter(r=>r.courseId===cid);
+function put(k,r){r.u=NOW();if(!r.id)r.id=uid();const i=S[k].findIndex(x=>x.id===r.id);if(i<0)S[k].push(r);else S[k][i]=r;return r}
+function del(k,id){const r=S[k].find(x=>x.id===id);if(r){r.del=true;r.u=NOW()}}
+function settings(){let s=S.meta.find(r=>r.id==='settings');if(!s){const[jy,jm]=g2j(...isoOf(new Date()).split('-').map(Number));const ts=jm>=7&&jm<11?isoJ(jy,7,1):jm>=11?isoJ(jy,11,15):jm<=3?isoJ(jy-1,11,15):isoJ(jy,4,1);s={id:'settings',termStart:ts,notifyHour:21,u:0};S.meta.push(s)}return s}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s);
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+
+// ===== Schedule logic =====
+const hm=t=>{const[h,m]=(t||'00:00').split(':').map(Number);return h*60+(m||0)};
+function cancelled(iso,cid){return live('offdays').some(o=>o.date===iso&&(!o.courseId||o.courseId===cid))}
+function classesOn(iso,cid){const pd=pday(dOf(iso));return live('slots').filter(s=>+s.day===pd&&course(s.courseId)&&(!cid||s.courseId===cid)).sort((a,b)=>hm(a.start)-hm(b.start)).map(s=>({slot:s,c:course(s.courseId),iso,off:cancelled(iso,s.courseId)}))}
+function nextClass(cid){const n=new Date(),nm=n.getHours()*60+n.getMinutes();for(let i=0;i<15;i++){const iso=isoOf(addD(today(),i));const l=classesOn(iso,cid).filter(x=>!x.off&&(i>0||hm(x.slot.end||x.slot.start)>nm));if(l.length)return l[0]}return null}
+function countdown(x){const d=daysLeft(x.iso);const t=fa(x.slot.start);if(d===0){const mins=hm(x.slot.start)-(new Date().getHours()*60+new Date().getMinutes());if(mins<=0)return'الان در کلاس';return'امروز '+t+(mins<180?' · '+fa(mins>=60?Math.floor(mins/60)+' ساعت و ':'')+fa(mins%60)+' دقیقه دیگر':'')}if(d===1)return'فردا '+t;return DAYS[pday(dOf(x.iso))]+' '+t+' · '+fa(d)+' روز دیگر'}
+function occurrences(cid){const st=dOf(settings().termStart),end=addD(today(),14),out=[];let n=0;for(let d=st,g=0;d<=end&&g<300;d=addD(d,1),g++){const iso=isoOf(d);classesOn(iso,cid).forEach(x=>{if(!x.off)n++;out.push({...x,n:x.off?null:n,key:'s_'+cid+'_'+iso+'_'+x.slot.id})})}return out}
+const sessionRec=key=>get('sessions',key);
+const absCount=cid=>ofC('sessions',cid).filter(s=>s.absent).length;
+const examsOf=cid=>ofC('exams',cid).sort((a,b)=>a.date<b.date?-1:1);
+const nextExam=cid=>examsOf(cid).find(e=>daysLeft(e.date)>=0);
+const openTasks=cid=>live('tasks').filter(t=>!t.done&&(!cid||t.courseId===cid));
+const byDue=(a,b)=>(a.due||'9999')<(b.due||'9999')?-1:1;
+const topicPct=c=>c.topics&&c.topics.length?Math.round(100*c.topics.filter(t=>t.done).length/c.topics.length):null;
+
+// ===== Persistence + sync =====
+let SYNC={ip:'',pin:'',state:'off'},dv='';
+function persist(){localStorage.setItem('darsyar2',JSON.stringify(S));localStorage.setItem('darsyar_files',JSON.stringify(FILES))}
+function save(){if(PHONE){persist();scheduleNotifs();queueSync()}else if(WEB)persist();else pushDesktop()}
+function loadPhone(){let s=null;try{s=JSON.parse(localStorage.getItem('darsyar2'))}catch(e){}
+  try{FILES=JSON.parse(localStorage.getItem('darsyar_files')||'{}')}catch(e){FILES={}}
+  if(!s){s=norm({});let old=null;try{old=JSON.parse(localStorage.getItem('darsyar'))}catch(e){}
+    if(old&&old.courses)old.courses.forEach(c=>{if(c.files&&c.files.length)FILES[c.id]=c.files.map(f=>({...f,group:''}));
+      s.courses.push({id:c.id,u:NOW(),name:c.name,color:c.color,mastery:c.mastery||0,maxAbs:3,note:c.note||'',prof:'',units:'',topics:(c.topics||[]).map(t=>({id:uid(),...t}))});
+      if(c.exam)s.exams.push({id:uid(),u:NOW(),courseId:c.id,type:'پایان‌ترم',date:c.exam,time:c.time||'',place:c.place||''})})}
+  S=norm(s);try{Object.assign(SYNC,JSON.parse(localStorage.getItem('darsyar_sync')||'{}'))}catch(e){}
+  SYNC.state=SYNC.pin?'busy':'off';persist()}
+let syncT;function queueSync(){clearTimeout(syncT);syncT=setTimeout(doSync,1200)}
+function setSync(st){SYNC.state=st;const e=$('#sdot');if(e){e.className='sync '+st;e.querySelector('span').textContent=syncLabel()}}
+const syncLabel=()=>({ok:'همگام',busy:'در حال اتصال…',fail:'لپ‌تاپ پیدا نشد',badpin:'PIN اشتباه',off:'اتصال'})[SYNC.state];
+function saveSyncCfg(){localStorage.setItem('darsyar_sync',JSON.stringify({ip:SYNC.ip,pin:SYNC.pin}))}
+const HC={};let hcN=0;window.__httpCb=(id,st,tx)=>{const f=HC[id];delete HC[id];f&&f({status:st,text:tx})};
+const nhttp=(url,body)=>new Promise(res=>{const id='h'+(++hcN);HC[id]=res;Android.http(id,url,body)});
+async function tryHost(ip){try{const r=await nhttp('http://'+ip+':8765/api/sync?pin='+encodeURIComponent(SYNC.pin),JSON.stringify(S));
+    if(r.status===401){setSync('badpin');return true}if(r.status!==200){SYNC.err=ip+' → '+(r.status||'')+' '+r.text.slice(0,120);return false}
+    S=merge(S,norm(JSON.parse(r.text)));persist();scheduleNotifs();SYNC.ip=ip;SYNC.err='';SYNC.last=Date.now();saveSyncCfg();setSync('ok');if(!busy())render();return true}
+  catch(e){SYNC.err=String(e);return false}}
+async function doSync(){if(!PHONE)return;if(!SYNC.pin){setSync('off');return}if(SYNC.state==='ok'&&Date.now()-(SYNC.last||0)<20000)return;setSync('busy');if(SYNC.ip&&await tryHost(SYNC.ip))return;Android.discover()}
+window.onDiscovered=async ip=>{if(!ip||!(await tryHost(ip))){if(!(SYNC.state==='ok'&&Date.now()-(SYNC.last||0)<20000))setSync('fail')}};
+window.onPeerSync=(id,pin,body)=>{if(!SYNC.pin||pin!==SYNC.pin){Android.reply(id,'BADPIN');setSync('badpin');return}
+  try{S=merge(S,norm(JSON.parse(body)));persist();scheduleNotifs();SYNC.err='';SYNC.last=Date.now();setSync('ok');Android.reply(id,JSON.stringify(S));if(!busy())render()}catch(e){Android.reply(id,'')}};
+window.onAppResume=()=>{applyTheme();doSync();if(!busy())render()};
+async function loadDesktop(){const r=await fetch('/api/data');S=norm(await r.json());dv=r.headers.get('X-Ver')||''}
+let pushT;function pushDesktop(){clearTimeout(pushT);pushT=setTimeout(async()=>{try{const r=await fetch('/api/sync',{method:'POST',body:JSON.stringify(S)});if(!r.ok)throw 0;dv=r.headers.get('X-Ver')||dv;S=merge(S,norm(await r.json()))}catch(e){toast('ذخیره نشد؛ برنامه‌ی ویندوز بسته شده؟')}},250)}
+async function pollDesktop(){if(document.hidden)return;try{const v=await (await fetch('/api/version')).text();if(v!==dv){const r=await fetch('/api/data');dv=r.headers.get('X-Ver')||v;S=merge(S,norm(await r.json()));if(!busy())render()}}catch(e){}}
+const busy=()=>sheetOpen||['INPUT','TEXTAREA','SELECT'].includes(document.activeElement&&document.activeElement.tagName);
+
+// ===== Notifications (phone) =====
+function hash(s){let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)%2000000000}
+function scheduleNotifs(){if(!PHONE||!Android.schedule)return;const out=[],now=NOW(),H=+settings().notifyHour||21;
+  for(let i=0;i<=30;i++){const d=addD(today(),i),iso=isoOf(d),lines=[];
+    const cl=classesOn(iso).filter(x=>!x.off);cl.forEach(x=>{const tk=openTasks(x.slot.courseId).filter(t=>t.due===iso);lines.push('🕗 '+fa(x.slot.start)+' '+x.c.name+(x.slot.room?' — '+x.slot.room:'')+(tk.length?' · تحویل: '+tk.map(t=>t.title).join('، '):''))});
+    live('exams').filter(e=>e.date===iso&&course(e.courseId)).forEach(e=>lines.push('📝 امتحان '+e.type+' '+course(e.courseId).name+(e.time?' ساعت '+fa(e.time):'')+(e.place?' — '+e.place:'')));
+    openTasks().filter(t=>t.due===iso&&!cl.some(x=>x.slot.courseId===t.courseId)).forEach(t=>lines.push('✅ تحویل: '+t.title+(course(t.courseId)?' ('+course(t.courseId).name+')':'')));
+    if(lines.length){const at=addD(d,-1).getTime()+H*3600e3;if(at>now)out.push({id:hash('n'+iso),at,title:'فردا، '+jLabel(iso,true)+(cl.length?' · '+fa(cl.length)+' کلاس':''),text:lines.join('\n')})}
+    live('exams').filter(e=>e.date===iso&&course(e.courseId)).forEach(e=>{const at=addD(d,-3).getTime()+20*3600e3;if(at>now)out.push({id:hash('e3'+e.id+iso),at,title:'۳ روز تا امتحان '+course(e.courseId).name,text:e.type+' · '+jLabel(iso,true)+(e.time?' ساعت '+fa(e.time):'')})})}
+  Android.schedule(JSON.stringify(out.slice(0,80)))}
+
+// ===== Navigation =====
+let view={page:'home'},stack=[],sheetOpen=false,calSel=TODAY(),calM=null,taskSeg='open';
+function go(page,id,extra){stack.push(view);view={page,id,...extra};render();scrollTo(0,0)}
+function tab(page){stack=[];view={page};render();scrollTo(0,0)}
+window.goBack=function(){if(sheetOpen){closeSheet();return true}if(stack.length){view=stack.pop();render();return true}if(view.page!=='home'){tab('home');return true}return false};
+function render(){const a=$('#app');const y=scrollY;
+  if(view.page==='course'&&course(view.id))a.innerHTML=renderCourse(course(view.id));
+  else{if(view.page==='course')view={page:'home'};a.innerHTML=({home:renderHome,cal:renderCal,week:renderWeek,tasks:renderTasks}[view.page]||renderHome)()+navBar()}
+  scrollTo(0,y);afterRender()}
+function navBar(){const b=(p,ic,t)=>`<button class="${view.page===p?'on':''}" onclick="tab('${p}')"><b>${ic}</b>${t}</button>`;return`<nav class="tabs">${b('home','⌂','خانه')}${b('cal','▦','تقویم')}${b('week','☰','برنامه هفتگی')}${b('tasks','✓','کارها')}</nav>`}
+function afterRender(){if(view.page==='course'&&view.tab==='files')loadFiles(view.id)}
+function headerBar(title,sub){return`<header><h1>${title}</h1><div class="sub">${sub}</div><div class="hact">${PHONE?`<button id="sdot" class="sync ${SYNC.state}" onclick="syncSheet()"><i></i><span>${syncLabel()}</span></button>`:''}<button class="ib" style="font-size:18px" onclick="openMenu()">☰</button></div></header>`}
+
+// ===== Home =====
+function courseCard(c){const nx=nextClass(c.id),ex=nextExam(c.id),ab=absCount(c.id),mx=+c.maxAbs||3,tp=topicPct(c);
+  const ep=ex?(daysLeft(ex.date)<=3?'p-bad':daysLeft(ex.date)<=10?'p-warn':'p-ok'):'p-mute';
+  return`<div class="card" style="--c:${c.color}" onclick="go('course','${c.id}',{tab:'over'})">
+   <div class="row"><div class="name">${esc(c.name)}</div><span class="pill ${ep}">${ex?ex.type+' · '+(daysLeft(ex.date)===0?'امروز':fa(daysLeft(ex.date))+' روز'):'امتحان ثبت نشده'}</span></div>
+   <div class="meta">${c.prof?esc(c.prof)+' · ':''}${nx?'کلاس بعدی: '+countdown(nx):'کلاسی در برنامه نیست'}${ab?` · <span style="color:${ab>=mx?'var(--bad)':ab>=mx-1?'var(--warn)':'inherit'}">غیبت ${fa(ab)}/${fa(mx)}</span>`:''}</div>
+   <div class="bar"><i style="width:${c.mastery||0}%"></i></div><div class="pct"><span>تسلط ${fa(c.mastery||0)}٪</span><span>${tp===null?'':'سرفصل‌ها '+fa(tp)+'٪'}</span></div></div>`}
+function taskRow(t,showCourse=true){const c=course(t.courseId),d=daysLeft(t.due);const col=t.done?'':d!==null&&d<0?'var(--bad)':d!==null&&d<=1?'var(--warn)':'';
+  return`<div class="item ${t.done?'done':''}"><button class="chk" onclick="togTask('${t.id}')">${t.done?'✓':''}</button><div class="t" onclick="taskSheet('${t.id}')"><div class="tt">${esc(t.title)}</div><div class="meta" style="margin:0">${showCourse&&c?`<span style="color:${c.color}">●</span> ${esc(c.name)} · `:''}<span style="color:${col}">${t.due?rel(t.due)+(d<0&&!t.done?' (گذشته)':''):'بدون مهلت'}</span></div></div></div>`}
+function classRow(x,withDate){const c=x.c,tk=openTasks(c.id).filter(t=>t.due===x.iso);
+  return`<div class="item ${x.off?'cancel':''}" style="--c:${c.color}"><span class="dot"></span><div class="t" onclick="go('course','${c.id}',{tab:'sess'})"><div class="tt"><b>${fa(x.slot.start)}</b>${x.slot.end?'–'+fa(x.slot.end):''} · ${esc(c.name)}</div><div class="meta" style="margin:0">${x.slot.room?'📍 '+esc(x.slot.room):''}${x.off?' · تشکیل نمی‌شود':''}${tk.length?' · تحویل: '+tk.map(t=>esc(t.title)).join('، '):''}</div></div>${withDate?`<button class="btn small ghost" onclick="toggleOff('${x.iso}','${c.id}')">${x.off?'برگردان':'کنسل'}</button>`:''}</div>`}
+function renderHome(){const cs=live('courses').sort((a,b)=>{const ea=nextExam(a.id),eb=nextExam(b.id);return(ea?ea.date:'9')<(eb?eb.date:'9')?-1:1});
+  const nx=nextClass(),td=classesOn(TODAY()),ot=openTasks().sort(byDue),ex=live('exams').filter(e=>course(e.courseId)&&daysLeft(e.date)>=0).sort((a,b)=>a.date<b.date?-1:1)[0];
+  const warn=cs.filter(c=>absCount(c.id)>=(+c.maxAbs||3)-1&&absCount(c.id)>0);
+  const t=today(),[jy,jm,jd]=g2j(t.getFullYear(),t.getMonth()+1,t.getDate());
+  return headerBar('📘 درس‌یار',DAYS[pday(t)]+' '+fa(jd)+' '+MONTHS[jm-1]+' '+fa(jy))+(!PHONE&&!FW?`<div class="card" style="--c:var(--bad);margin:46px 16px -30px;position:relative;z-index:2" onclick="syncSheet()"><b>فایروال ویندوز اتصال گوشی رو بسته</b><div class="meta">بزن ← «باز کردن فایروال»</div></div>`:'')+`
+  <div class="stats"><button class="stat" onclick="tab('week')"><b>${fa(td.filter(x=>!x.off).length)}</b><span>کلاس امروز</span></button><button class="stat" onclick="tab('tasks')"><b>${fa(ot.length)}</b><span>کار باز</span></button><button class="stat" onclick="${ex?`go('course','${ex.courseId}',{tab:'over'})`:''}"><b>${ex?fa(daysLeft(ex.date)):'—'}</b><span>${ex?'روز تا '+esc(course(ex.courseId).name):'امتحان بعدی'}</span></button></div>
+  <main>
+  ${nx?`<div class="hero" style="--c:${nx.c.color};margin-top:14px" onclick="go('course','${nx.c.id}',{tab:'sess'})"><div class="meta">کلاس بعدی</div><div class="big">${esc(nx.c.name)}</div><div>${countdown(nx)}${nx.slot.room?' · 📍 '+esc(nx.slot.room):''}</div>${openTasks(nx.c.id).filter(t=>t.due===nx.iso).map(t=>`<div class="meta">• ${esc(t.title)}</div>`).join('')}</div>`:''}
+  ${WEB&&!isStandalone()&&!localStorage.getItem('darsyar_noinst')?`<div class="card" style="--c:var(--accent);margin-top:14px" onclick="installSheet()"><div class="row"><div><div class="name">📲 درس‌یار رو نصب کن</div><div class="meta">مثل یک اپ روی صفحه‌ی گوشی، آفلاین و بدون پاک شدن اطلاعات.</div></div><button class="x" onclick="event.stopPropagation();localStorage.setItem('darsyar_noinst',1);render()">×</button></div></div>`:''}
+  ${semesterOver()?`<div class="hero" style="--c:#2E9E6B;margin-top:14px"><div class="big">ترم تموم شد 🎉</div><div class="meta">همه‌ی امتحان‌ها برگزار شدن. خسته نباشی!</div><button class="btn small" style="background:rgba(255,255,255,.2);margin-top:10px" onclick="newTerm()">شروع ترم جدید</button></div>`:''}
+  ${examClashes().map(([iso,l])=>`<div class="card" style="--c:var(--bad)" onclick="calSel='${iso}';calM=null;tab('cal')"><div class="name">⚠ ${fa(l.length)} امتحان در یک روز</div><div class="meta">${jLabel(iso,true)}: ${l.map(e=>esc(course(e.courseId).name)+(e.time?' ('+fa(e.time)+')':'')).join(' و ')}${daysLeft(iso)>0?' — از الان برای هر دو برنامه بریز.':''}</div></div>`).join('')}
+  ${(()=>{const sg=suggestions();return sg.length?`<div class="sec">پیشنهاد مطالعه</div><div class="block" style="margin-top:0">${sg.map(x=>`<div class="sug" onclick="go('course','${x.c.id}',{tab:'over'})"><span class="e">${x.e}</span><div><b>${esc(x.c.name)}</b><div class="meta" style="margin:0">${x.t}</div></div></div>`).join('')}</div>`:''})()}
+  ${warn.map(c=>`<div class="card" style="--c:var(--bad)" onclick="go('course','${c.id}',{tab:'sess'})"><div class="name">⚠ غیبت ${esc(c.name)}: ${fa(absCount(c.id))} از ${fa(+c.maxAbs||3)}</div><div class="meta">${absCount(c.id)>=(+c.maxAbs||3)?'به سقف غیبت رسیدی!':'فقط یک غیبت دیگه جا داری.'}</div></div>`).join('')}
+  ${ot.length?`<div class="sec">کارهای نزدیک <button class="btn small ghost" onclick="tab('tasks')">همه</button></div><div class="block" style="margin-top:0">${ot.slice(0,5).map(t=>taskRow(t)).join('')}</div>`:''}
+  ${cs.length?'<div class="sec">درس‌ها</div>'+cs.map(courseCard).join(''):`<div class="empty"><b>هنوز درسی اضافه نکردی</b>با دکمه‌ی + اولین درست رو بساز.</div>`}
+  </main><button class="fab" onclick="courseSheet()">+</button>`}
+
+function examClashes(){const m={};live('exams').filter(e=>course(e.courseId)&&daysLeft(e.date)>=0).forEach(e=>(m[e.date]=m[e.date]||[]).push(e));return Object.entries(m).filter(([,l])=>l.length>1).sort()}
+function semesterOver(){const ex=live('exams').filter(e=>course(e.courseId));return ex.length>0&&ex.every(e=>daysLeft(e.date)<0)}
+function suggestions(){const out=[],clash=new Set(examClashes().flatMap(([,l])=>l.map(e=>e.courseId)));
+  live('courses').forEach(c=>{const ex=nextExam(c.id);if(!ex)return;const d=daysLeft(ex.date),m=+c.mastery||0,left=(c.topics||[]).filter(t=>!t.done).length,cl=clash.has(c.id);
+    const score=(100-m)*(cl?1.3:1)/Math.max(1,d),tail=(left?' · '+fa(left)+' سرفصل مونده':'')+(cl?' · امتحانش با یه درس دیگه هم‌روزه':''),dd=d===0?'امروز':fa(d)+' روز';
+    if(d<=3&&m<70)out.push({c,score:score+1000,e:'🔥',t:`فقط ${dd} تا ${ex.type} و تسلطت ${fa(m)}٪ه. امروز اولویت با این درسه${tail}.`});
+    else if(d<=14&&m<60)out.push({c,score:score+100,e:'📚',t:`${dd} تا ${ex.type}، تسلط ${fa(m)}٪. هر روز یه کم روش کار کن${tail}.`});
+    else if(m<50)out.push({c,score,e:'📌',t:`تسلطت فقط ${fa(m)}٪ه و ${dd} تا امتحان مونده؛ از همین هفته روزی یه کم بخون${tail}.`});
+    else if(cl&&m<80)out.push({c,score,e:'⚠',t:`امتحانش با یه درس دیگه هم‌روزه؛ زودتر جمعش کن (${dd} مونده).`})});
+  return out.sort((a,b)=>b.score-a.score).slice(0,3)}
+function newTerm(){if(!confirm('درس‌های این ترم بایگانی بشن و ترم جدید شروع بشه؟ (اطلاعات پاک نمی‌شه)'))return;live('courses').forEach(c=>{c.archived=true;put('courses',c)});
+  const s=settings(),t=today(),[jy,jm]=g2j(t.getFullYear(),t.getMonth()+1,t.getDate());s.termStart=isoOf(t);put('meta',s);save();render();setTimeout(()=>{if(confirm('کلاس‌های ترم جدید رو با هوش مصنوعی وارد کنی؟'))importSheet()},300)}
+
+// ===== Web helpers =====
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let instEvt=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();instEvt=e});
+function idb(){return new Promise((res,rej)=>{const q=indexedDB.open('darsyar',1);q.onupgradeneeded=()=>q.result.createObjectStore('files');q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})}
+async function idbOp(mode,fn){const db=await idb();return new Promise((res,rej)=>{const t=db.transaction('files',mode),st=t.objectStore('files'),q=fn(st);t.oncomplete=()=>res(q&&q.result);t.onerror=()=>rej(t.error)})}
+const idbPut=(k,v)=>idbOp('readwrite',s=>s.put(v,k)),idbGet=k=>idbOp('readonly',s=>s.get(k)),idbDel=k=>idbOp('readwrite',s=>s.delete(k));
+function download(text,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>a.remove(),500)}
+function installSheet(){openSheet(`<h2>📲 نصب درس‌یار</h2>
+  ${isIOS()?`<div class="meta">در آیفون حتماً با <b>Safari</b> باز کن:</div><ol class="steps"><li><div>دکمه‌ی <b>Share</b> (مربع با فلش رو به بالا ⬆) پایین صفحه رو بزن.</div></li><li><div>پایین‌تر برو و <b>Add to Home Screen</b> رو بزن.</div></li><li><div><b>Add</b> رو بزن. حالا درس‌یار مثل یه اپ روی صفحه‌ی گوشیه.</div></li></ol>
+   <div class="block"><b>یادآوری‌ها در آیفون:</b><div class="meta">آیفون به سایت‌ها اجازه‌ی یادآوری زمان‌بندی‌شده نمی‌ده. از منو ☰ ← «افزودن به تقویم گوشی» رو بزن تا همه‌ی کلاس‌ها و امتحان‌ها با هشدار شب قبل وارد Calendar آیفون بشن.</div></div>`
+  :`${instEvt?`<button class="btn" style="width:100%" onclick="instEvt.prompt();closeSheet()">نصب</button>`:`<ol class="steps"><li><div>در Chrome منوی <b>⋮</b> بالای صفحه رو بزن.</div></li><li><div><b>Install app</b> یا <b>Add to Home screen</b> رو بزن.</div></li></ol>`}`}
+  <div class="actions"><button class="btn ghost" onclick="closeSheet()">بستن</button></div>`)}
+function icsEsc(s){return String(s||'').replace(/[\\,;]/g,m=>'\\'+m).replace(/\n/g,'\\n')}
+const icsDT=(iso,t)=>iso.replace(/-/g,'')+'T'+(t||'00:00').replace(':','')+'00';
+function exportICS(){const st=settings(),H=+st.notifyHour||21,L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Darsyar//FA','CALSCALE:GREGORIAN','X-WR-CALNAME:درس‌یار'];
+  const stamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z',exs=live('exams').filter(e=>course(e.courseId));
+  const last=exs.map(e=>e.date).sort().pop()||isoOf(addD(dOf(st.termStart),140)),until=last.replace(/-/g,'')+'T235959';
+  const alarm=(desc,trig)=>['BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(desc),'TRIGGER:'+trig,'END:VALARM'];
+  live('slots').forEach(s=>{const c=course(s.courseId);if(!c)return;let d=dOf(st.termStart);while(pday(d)!==+s.day)d=addD(d,1);const first=isoOf(d);
+    const ex=live('offdays').filter(o=>(!o.courseId||o.courseId===c.id)&&pday(dOf(o.date))===+s.day&&o.date>=first).map(o=>icsDT(o.date,s.start));
+    L.push('BEGIN:VEVENT','UID:'+s.id+'@darsyar','DTSTAMP:'+stamp,'DTSTART:'+icsDT(first,s.start),'DTEND:'+icsDT(first,s.end||s.start),'RRULE:FREQ=WEEKLY;UNTIL='+until,...(ex.length?['EXDATE:'+ex.join(',')]:[]),
+      'SUMMARY:'+icsEsc('کلاس '+c.name),'LOCATION:'+icsEsc(s.room),'DESCRIPTION:'+icsEsc(c.prof?'استاد '+c.prof:''),...alarm('فردا کلاس '+c.name+(s.room?' — '+s.room:''),'-PT'+(hm(s.start)+(24-H)*60)+'M'),'END:VEVENT')});
+  exs.forEach(e=>{const c=course(e.courseId),t=e.time||'08:00',en=hm(t)+120;
+    L.push('BEGIN:VEVENT','UID:'+e.id+'@darsyar','DTSTAMP:'+stamp,'DTSTART:'+icsDT(e.date,t),'DTEND:'+icsDT(e.date,p2(Math.min(23,Math.floor(en/60)))+':'+p2(en%60)),'SUMMARY:'+icsEsc('امتحان '+e.type+' '+c.name),'LOCATION:'+icsEsc(e.place),
+      ...alarm('فردا امتحان '+c.name,'-PT'+(hm(t)+(24-H)*60)+'M'),...alarm('۳ روز تا امتحان '+c.name,'-P3D'),'END:VEVENT')});
+  openTasks().filter(t=>t.due).forEach(t=>{const c=course(t.courseId);
+    L.push('BEGIN:VEVENT','UID:'+t.id+'@darsyar','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+t.due.replace(/-/g,''),'SUMMARY:'+icsEsc('تحویل: '+t.title+(c?' ('+c.name+')':'')),...alarm('فردا تحویل: '+t.title,'-PT'+((24-H)*60)+'M'),'END:VEVENT')});
+  L.push('END:VCALENDAR');download(L.join('\r\n'),'darsyar.ics','text/calendar');
+  toast(isIOS()?'فایل رو باز کن و «Add All» رو بزن':'فایل رو باز کن تا به تقویم اضافه بشه')}
+function backupSheet(){openSheet(`<h2>💾 پشتیبان‌گیری</h2><div class="meta">همه‌ی درس‌ها، کلاس‌ها، امتحان‌ها، جلسه‌ها و کارها توی یک فایل ذخیره می‌شن (جزوه‌ها جدا هستن و توی این فایل نیستن). برای انتقال به گوشی دیگه یا محکم‌کاری.</div>
+  <button class="btn" style="width:100%;margin-top:14px" onclick="download(JSON.stringify({darsyarBackup:1,date:new Date().toISOString(),data:S}),'darsyar-backup-'+TODAY()+'.json','application/json');toast('ذخیره شد')">⬇ دانلود فایل پشتیبان</button>
+  <button class="btn ghost" style="width:100%;margin-top:8px" onclick="restoreBackup()">⬆ بازیابی از فایل</button>
+  <div class="actions"><button class="btn ghost" onclick="closeSheet()">بستن</button></div>`)}
+function restoreBackup(){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=async()=>{try{const j=JSON.parse(await i.files[0].text());if(!j.darsyarBackup||!j.data)throw 0;S=merge(S,norm(j.data));save();closeSheet();render();toast('بازیابی شد ✓')}catch(e){toast('فایل پشتیبان معتبر نیست')}};i.click()}
+
+// ===== Menu =====
+function openMenu(){closeSheet();const bg=document.createElement('div');bg.className='drawer-bg';bg.id='sheet';bg.onclick=e=>{if(e.target===bg)closeSheet()};
+  const it=(ic,t,sub,fn)=>`<button class="mi" onclick="closeSheet();${fn}"><i>${ic}</i><span>${t}${sub?`<small>${sub}</small>`:''}</span></button>`;
+  bg.innerHTML=`<div class="drawer"><div class="dh"><b>📘 درس‌یار</b><span style="opacity:.75;font-size:13px">دستیار دانشگاهی تو</span></div>
+   ${WEB?(isStandalone()?'':it('📲','نصب روی گوشی','آیفون و اندروید','installSheet()')):it('🔗','اتصال دستگاه‌ها',PHONE?syncLabel():'گوشی ↔ لپ‌تاپ','syncSheet()')}
+   ${it('✨','ورود کلاس‌ها با هوش مصنوعی','از عکس انتخاب واحد','importSheet()')}
+   ${it('📅','افزودن به تقویم گوشی','کلاس‌ها و امتحان‌ها با یادآوری شب قبل','exportICS()')}
+   ${it('💾','پشتیبان‌گیری','ذخیره و بازیابی اطلاعات','backupSheet()')}
+   ${it('⚙','تنظیمات','حالت تیره/روشن، ترم، یادآوری','settingsSheet()')}
+   ${it('👤','ارتباط با توسعه‌دهنده','Mahan Kenarroudi','devSheet()')}
+   <div class="meta" style="padding:14px 18px">نسخه ۳.۰</div></div>`;
+  document.body.appendChild(bg);sheetOpen=true}
+function openLink(u){if(PHONE)Android.openUrl(u);else window.open(u,'_blank')}
+function devSheet(){const L=(ic,t,v,u)=>`<div class="item" onclick="openLink('${u}')"><div class="ficon" style="font-size:16px">${ic}</div><div class="t"><div class="tt">${t}</div><div class="meta ltr" style="margin:0;text-align:right">${v}</div></div><span class="x">‹</span></div>`;
+  openSheet(`<h2>ارتباط با توسعه‌دهنده</h2><div class="meta">درس‌یار رو ماهان کناررودی ساخته. پیشنهاد، باگ یا ایده داری؟ خوشحال می‌شم بشنوم.</div>
+  <div class="block">${L('in','LinkedIn','Mahan Kenarroudi','https://www.linkedin.com/search/results/people/?keywords=Mahan%20Kenarroudi')}${L('✉','Email','mahankenarroudii@gmail.com','mailto:mahankenarroudii@gmail.com?subject=%D8%AF%D8%B1%D8%B3%E2%80%8C%DB%8C%D8%A7%D8%B1')}${L('⌥','GitHub','github.com/mwhntich','https://github.com/mwhntich')}</div>
+  <div class="actions"><button class="btn ghost" onclick="closeSheet()">بستن</button></div>`)}
+
+// ===== AI import =====
+const AI_PROMPT=`تو یک دستیار استخراج داده هستی. از تصویر «انتخاب واحد / برنامه‌ی کلاسی» که پیوست کرده‌ام، اطلاعات همه‌ی درس‌ها را استخراج کن و فقط و فقط یک فایل JSON با ساختار زیر بساز (اگر می‌توانی به‌صورت فایل قابل دانلود با نام darsyar-import.json بده، وگرنه داخل یک code block):
+
+{
+  "darsyar": 1,
+  "courses": [
+    {
+      "name": "نام درس",
+      "professor": "نام استاد",
+      "units": 3,
+      "classes": [
+        { "day": "شنبه", "start": "08:00", "end": "10:30", "room": "" }
+      ],
+      "exams": [
+        { "type": "پایان‌ترم", "date": "1405/10/20", "time": "10:45", "place": "" }
+      ]
+    }
+  ]
+}
+
+قوانین:
+- day فقط یکی از: شنبه، یکشنبه، دوشنبه، سه‌شنبه، چهارشنبه، پنجشنبه، جمعه
+- ساعت‌ها ۲۴ساعته با فرمت HH:MM و با ارقام انگلیسی
+- تاریخ امتحان شمسی با فرمت YYYY/MM/DD و ارقام انگلیسی؛ time = ساعت شروع امتحان
+- اگر درسی چند جلسه در هفته دارد، برای هر جلسه یک آیتم در classes بگذار
+- type امتحان یکی از: میان‌ترم، پایان‌ترم، کوییز، پروژه، دیگر (اگر مشخص نیست: پایان‌ترم)
+- اگر اطلاعاتی در تصویر نیست، رشته‌ی خالی "" یا 0 بگذار؛ چیزی حدس نزن و درس اضافه نساز
+- هیچ توضیح اضافه‌ای ننویس؛ فقط JSON`;
+function copyPrompt(){if(PHONE)Android.copy(AI_PROMPT);else navigator.clipboard.writeText(AI_PROMPT);toast('پرامپت کپی شد ✓')}
+function importSheet(){openSheet(`<h2>✨ ورود کلاس‌ها با هوش مصنوعی</h2><div class="meta">حوصله‌ی وارد کردن دستی کلاس‌ها رو نداری؟ با یه عکس از انتخاب واحدت، همه‌چیز خودکار وارد می‌شه.</div>
+  <ol class="steps"><li><div>پرامپت زیر رو کپی کن.<div class="code" style="margin-top:8px">${esc(AI_PROMPT)}</div><button class="btn small" style="margin-top:8px" onclick="copyPrompt()">📋 کپی پرامپت</button></div></li>
+  <li><div>پرامپت رو همراه با <b>عکس برنامه‌ی کلاسی‌ات</b> (انتخاب واحد گلستان یا هر سامانه‌ای) به یک هوش مصنوعی مثل Claude یا ChatGPT یا Gemini بده.</div></li>
+  <li><div>فایلی که بهت می‌ده (darsyar-import.json) رو دانلود کن — یا متن JSON رو کپی کن.</div></li>
+  <li><div>اینجا واردش کن:<div class="addrow"><button class="btn" style="flex:1" onclick="pickImport()">📂 انتخاب فایل</button></div><textarea id="imp-t" style="margin-top:8px;direction:ltr;font-size:12px" placeholder="…یا JSON رو اینجا paste کن"></textarea><button class="btn ghost" style="width:100%;margin-top:6px" onclick="previewImport($('#imp-t').value)">بررسی متن</button></div></li></ol>
+  <div id="imp-prev"></div><div class="actions"><button class="btn ghost" onclick="closeSheet()">بستن</button></div>`)}
+function pickImport(){if(PHONE)Android.pickText();else{const i=document.createElement('input');i.type='file';i.accept='.json,.txt,application/json,text/plain';i.onchange=async()=>previewImport(await i.files[0].text());i.click()}}
+window.onTextPicked=t=>{if($('#imp-t'))$('#imp-t').value=t;previewImport(t)};
+const enD=s=>String(s??'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).trim();
+const normDay=s=>{const k=String(s||'').replace(/[\s\u200c]/g,'').replace(/ي/g,'ی');return{'شنبه':0,'یکشنبه':1,'دوشنبه':2,'سهشنبه':3,'چهارشنبه':4,'پنجشنبه':5,'جمعه':6}[k]};
+const normT=s=>{const m=enD(s).match(/(\d{1,2})[:٫.](\d{2})/);return m?p2(+m[1])+':'+m[2]:''};
+function normJDate(s){const m=enD(s).match(/(\d{4})\D(\d{1,2})\D(\d{1,2})/);if(!m)return'';const[y,mo,d]=[+m[1],+m[2],+m[3]];if(y<1300||y>1500||mo<1||mo>12||d<1||d>31)return'';return isoJ(y,mo,d)}
+let IMP=null;
+function previewImport(txt){const el=$('#imp-prev');try{const a=txt.indexOf('{'),b=txt.lastIndexOf('}');if(a<0||b<a)throw 0;const j=JSON.parse(txt.slice(a,b+1));if(!Array.isArray(j.courses)||!j.courses.length)throw 0;
+    IMP=j.courses.filter(c=>c&&c.name).map(c=>({name:String(c.name).trim(),prof:String(c.professor||c.prof||'').trim(),units:c.units?String(enD(c.units)):'',
+      classes:(c.classes||[]).map(k=>({day:normDay(k.day),start:normT(k.start),end:normT(k.end),room:String(k.room||'').trim()})).filter(k=>k.day!==undefined&&k.start),
+      exams:(c.exams||[]).map(e=>({type:EXAM_TYPES.includes(e.type)?e.type:'پایان‌ترم',date:normJDate(e.date),time:normT(e.time||e.start),place:String(e.place||'').trim()})).filter(e=>e.date)}));
+    if(!IMP.length)throw 0;
+    const dates={};IMP.forEach(c=>c.exams.forEach(e=>(dates[e.date]=dates[e.date]||[]).push(c.name)));const cl=Object.entries(dates).filter(([,l])=>l.length>1);
+    el.innerHTML=`<div class="block"><h3>${fa(IMP.length)} درس پیدا شد</h3>${IMP.map(c=>`<div class="item"><div class="t"><div class="tt"><b>${esc(c.name)}</b>${c.prof?' · '+esc(c.prof):''}</div><div class="meta" style="margin:0">${c.classes.map(k=>DAYS[k.day]+' '+fa(k.start)).join('، ')||'بدون زمان کلاس'}${c.exams.length?' · امتحان '+c.exams.map(e=>jLabel(e.date)).join('، '):''}</div></div>${live('courses').some(x=>x.name===c.name)?'<span class="tag">به‌روزرسانی</span>':''}</div>`).join('')}
+     ${cl.map(([d,l])=>`<div class="meta" style="color:var(--bad)">⚠ ${fa(l.length)} امتحان در ${jLabel(d)}: ${l.map(esc).join(' و ')}</div>`).join('')}
+     <button class="btn" style="width:100%;margin-top:12px" onclick="doImport()">وارد کردن</button></div>`;el.scrollIntoView({behavior:'smooth'})}
+  catch(e){IMP=null;el.innerHTML='<div class="block" style="color:var(--bad)">فایل/متن معتبر نیست. مطمئن شو خروجی هوش مصنوعی همون JSON با ساختار پرامپته.</div>'}}
+function doImport(){if(!IMP)return;let i=live('courses').length;IMP.forEach(x=>{let c=live('courses').find(c=>c.name===x.name);
+    if(c){c.prof=x.prof||c.prof;c.units=x.units||c.units;put('courses',c);ofC('slots',c.id).forEach(r=>del('slots',r.id));ofC('exams',c.id).forEach(r=>del('exams',r.id))}
+    else c=put('courses',{name:x.name,prof:x.prof,units:x.units,color:COLORS[i++%COLORS.length],maxAbs:3,mastery:0,topics:[],note:'',email:'',office:'',profNotes:''});
+    x.classes.forEach(k=>put('slots',{courseId:c.id,...k}));x.exams.forEach(e=>put('exams',{courseId:c.id,...e}))});
+  save();closeSheet();toast(fa(IMP.length)+' درس وارد شد ✓');IMP=null;tab('home')}
+
+// ===== Calendar =====
+function dayItems(iso){return{cl:classesOn(iso),ex:live('exams').filter(e=>e.date===iso&&course(e.courseId)),tk:live('tasks').filter(t=>t.due===iso),off:live('offdays').some(o=>o.date===iso&&!o.courseId)}}
+function renderCal(){if(!calM){const[y,m]=jOf(calSel);calM=[y,m]}const[jy,jm]=calM,first=isoJ(jy,jm,1),n=mlen(jy,jm),pad=pday(dOf(first)),td=TODAY();
+  let cells='';for(let i=0;i<pad;i++)cells+='<span></span>';
+  for(let d=1;d<=n;d++){const iso=isoJ(jy,jm,d),it=dayItems(iso),dots=[...it.ex.map(()=>'#D64545'),...it.cl.filter(x=>!x.off).map(x=>x.c.color),...(it.tk.some(t=>!t.done)?['#F2A93B']:[])].slice(0,4);
+    cells+=`<button class="${iso===td?'today':''} ${iso===calSel?'sel':''} ${it.off?'off':''} ${pday(dOf(iso))===6?'fri':''}" onclick="calSel='${iso}';render()">${fa(d)}<span class="ds">${dots.map(c=>`<i style="--c:${c}"></i>`).join('')}</span></button>`}
+  const it=dayItems(calSel);
+  return headerBar('تقویم',MONTHS[jm-1]+' '+fa(jy))+`<main style="padding-top:0;margin-top:-36px;position:relative">
+  <div class="mhead" style="color:#fff;margin-top:0"><button class="ib" onclick="calMove(-1)">→</button><b>${MONTHS[jm-1]} ${fa(jy)}</b><button class="ib" onclick="calMove(1)">←</button></div>
+  <div class="cal" style="box-shadow:0 2px 8px rgba(20,30,50,.06)">${['ش','ی','د','س','چ','پ','ج'].map(h=>`<span class="h">${h}</span>`).join('')}${cells}</div>
+  <div class="sec">${jLabel(calSel,true)} ${calSel===td?'(امروز)':''}<span><button class="btn small ghost" onclick="toggleOff('${calSel}','')">${it.off?'لغو تعطیلی':'تعطیل'}</button></span></div>
+  <div class="block" style="margin-top:0">
+   ${it.ex.map(e=>`<div class="item" onclick="examSheet('${e.courseId}','${e.id}')"><span class="pill p-bad">امتحان</span><div class="t"><div class="tt">${e.type} ${esc(course(e.courseId).name)}</div><div class="meta" style="margin:0">${e.time?fa(e.time):''} ${e.place?'📍 '+esc(e.place):''}</div></div></div>`).join('')}
+   ${it.cl.map(x=>classRow(x,true)).join('')}
+   ${it.tk.map(t=>taskRow(t)).join('')}
+   ${!it.ex.length&&!it.cl.length&&!it.tk.length?'<div class="meta">برای این روز چیزی ثبت نشده.</div>':''}
+  </div><div class="addrow"><button class="btn ghost" style="flex:1" onclick="taskSheet(null,{due:'${calSel}'})">+ کار برای این روز</button><button class="btn ghost" style="flex:1" onclick="examSheet('',null,'${calSel}')">+ امتحان</button></div></main>`}
+function calMove(n){let[y,m]=calM;m+=n;if(m<1){m=12;y--}if(m>12){m=1;y++}calM=[y,m];render()}
+function toggleOff(iso,cid){const o=live('offdays').find(o=>o.date===iso&&(o.courseId||'')===cid);if(o)del('offdays',o.id);else put('offdays',{date:iso,courseId:cid});save();render()}
+
+// ===== Week =====
+function renderWeek(){const pd=pday(today()),sl=live('slots').filter(s=>course(s.courseId));
+  return headerBar('برنامه هفتگی','کلاس‌های ثابت هر هفته')+`<main style="margin-top:-36px;position:relative">${DAYS.map((d,i)=>{const l=sl.filter(s=>+s.day===i).sort((a,b)=>hm(a.start)-hm(b.start));if(!l.length&&i===6)return'';
+    return`<div class="block" style="${i===pd?'outline:2px solid var(--brand)':''}"><h3><span style="color:var(--ink);font-weight:700">${d}${i===pd?' · امروز':''}</span></h3>${l.length?l.map(s=>{const c=course(s.courseId);return`<div class="item" style="--c:${c.color}" onclick="slotSheet('${s.courseId}','${s.id}')"><span class="dot"></span><div class="t"><div class="tt"><b>${fa(s.start)}</b>${s.end?'–'+fa(s.end):''} · ${esc(c.name)}</div><div class="meta" style="margin:0">${s.room?'📍 '+esc(s.room):''}</div></div></div>`}).join(''):'<div class="meta">کلاسی نداری</div>'}</div>`}).join('')}</main>
+  <button class="fab" onclick="slotSheet('')">+</button>`}
+
+// ===== Tasks =====
+function renderTasks(){const all=live('tasks').filter(t=>taskSeg==='open'?!t.done:t.done).sort(byDue);
+  const grp=[['گذشته',t=>t.due&&daysLeft(t.due)<0],['امروز',t=>t.due&&daysLeft(t.due)===0],['فردا',t=>t.due&&daysLeft(t.due)===1],['این هفته',t=>t.due&&daysLeft(t.due)>1&&daysLeft(t.due)<=7],['بعداً',t=>t.due&&daysLeft(t.due)>7],['بدون مهلت',t=>!t.due]];
+  return headerBar('کارها و تکالیف',fa(openTasks().length)+' کار باز')+`<main style="margin-top:-36px;position:relative"><div class="seg"><button class="${taskSeg==='open'?'on':''}" onclick="taskSeg='open';render()">باز</button><button class="${taskSeg==='done'?'on':''}" onclick="taskSeg='done';render()">انجام‌شده</button></div>
+  ${taskSeg==='done'?(all.length?`<div class="block">${all.map(t=>taskRow(t)).join('')}</div>`:'<div class="empty">هنوز چیزی تیک نزدی</div>'):grp.map(([n,f])=>{const l=all.filter(f);return l.length?`<div class="sec">${n}</div><div class="block" style="margin-top:0">${l.map(t=>taskRow(t)).join('')}</div>`:''}).join('')||'<div class="empty"><b>کار بازی نداری 🎉</b></div>'}</main>
+  <button class="fab" onclick="taskSheet()">+</button>`}
+function togTask(id){const t=get('tasks',id);t.done=!t.done;put('tasks',t);save();render()}
+
+// ===== Course panel =====
+function renderCourse(c){const nx=nextClass(c.id),ex=nextExam(c.id),ab=absCount(c.id),mx=+c.maxAbs||3,ot=openTasks(c.id).length,tb=view.tab||'over';
+  const T=(k,t)=>`<button class="${tb===k?'on':''}" onclick="view.tab='${k}';render()">${t}</button>`;
+  const body={over:courseOver,sess:courseSess,tasks:courseTasks,files:courseFiles}[tb](c);
+  return`<div class="top" style="--c:${c.color}"><div class="row"><button class="ib" onclick="goBack()">→</button><button class="ib" onclick="courseSheet('${c.id}')">ویرایش</button></div>
+   <h2>${esc(c.name)}</h2><div class="meta">${[c.prof&&'استاد '+esc(c.prof),c.units&&fa(c.units)+' واحد'].filter(Boolean).join(' · ')||'استاد و واحد رو از «ویرایش» وارد کن'}</div>
+   ${nx?`<div class="next">🕗 ${countdown(nx)}${nx.slot.room?' · 📍 '+esc(nx.slot.room):''}</div>`:''}</div>
+  <div class="qs" style="--c:${c.color}">
+   <button class="stat" onclick="view.tab='over';render()"><b style="color:${ex&&daysLeft(ex.date)<=3?'var(--bad)':''}">${ex?fa(daysLeft(ex.date)):'—'}</b><span>${ex?'روز تا '+ex.type:'امتحان'}</span></button>
+   <button class="stat" onclick="view.tab='over';render()"><b>${fa(c.mastery||0)}٪</b><span>تسلط</span></button>
+   <button class="stat" onclick="view.tab='sess';render()"><b style="color:${ab>=mx?'var(--bad)':ab>=mx-1&&ab?'var(--warn)':''}">${fa(ab)}/${fa(mx)}</b><span>غیبت</span></button>
+   <button class="stat" onclick="view.tab='tasks';render()"><b>${fa(ot)}</b><span>کار باز</span></button></div>
+  <main style="--c:${c.color}"><div class="itabs">${T('over','نمای کلی')}${T('sess','جلسات')}${T('tasks','کارها')}${T('files','جزوه‌ها')}</div>${body}</main>`}
+function courseOver(c){const ex=examsOf(c.id),sl=ofC('slots',c.id).sort((a,b)=>a.day-b.day||hm(a.start)-hm(b.start)),tp=topicPct(c);
+  return`<div class="block"><h3>امتحان‌ها <button class="btn small" onclick="examSheet('${c.id}')">+ امتحان</button></h3>
+   ${ex.length?ex.map(e=>{const d=daysLeft(e.date);return`<div class="item" onclick="examSheet('${c.id}','${e.id}')"><div class="t"><div class="tt"><b>${e.type}</b> · ${jLabel(e.date,true)}${e.time?' · '+fa(e.time):''}</div><div class="meta" style="margin:0">${e.place?'📍 '+esc(e.place):''}</div></div><span class="pill ${d<0?'p-mute':d<=3?'p-bad':d<=10?'p-warn':'p-ok'}">${d<0?'برگزار شد':d===0?'امروز!':fa(d)+' روز'}</span></div>`}).join(''):'<div class="meta">هنوز امتحانی ثبت نشده.</div>'}</div>
+  <div class="block"><h3>چقدر بلدم؟ <span class="bignum" id="mv">${fa(c.mastery||0)}٪</span></h3>
+   <input type="range" min="0" max="100" step="5" value="${c.mastery||0}" oninput="$('#mv').textContent=fa(this.value)+'٪'" onchange="const c=course('${c.id}');c.mastery=+this.value;put('courses',c);save()">
+   ${tp!==null?`<div class="row meta"><span>بر اساس سرفصل‌ها: ${fa(tp)}٪</span><button class="btn small ghost" onclick="const c=course('${c.id}');c.mastery=${tp};put('courses',c);save();render()">همین رو بذار</button></div>`:''}</div>
+  <div class="block"><h3>سرفصل‌ها <span>${c.topics.length?fa(c.topics.filter(t=>t.done).length)+'/'+fa(c.topics.length):''}</span></h3>
+   ${c.topics.map(t=>`<div class="item ${t.done?'done':''}"><button class="chk" onclick="togTopic('${c.id}','${t.id}')">${t.done?'✓':''}</button><div class="t"><div class="tt">${esc(t.title)}</div></div><button class="x" onclick="delTopic('${c.id}','${t.id}')">×</button></div>`).join('')}
+   <div class="addrow"><input type="text" id="nt" placeholder="مثلاً فصل ۳ — زمان‌بندی" onkeydown="if(event.key==='Enter')addTopic('${c.id}')"><button class="btn small" onclick="addTopic('${c.id}')">افزودن</button></div></div>
+  <div class="block"><h3>زمان کلاس در هفته <button class="btn small" onclick="slotSheet('${c.id}')">+ زمان</button></h3>
+   ${sl.length?sl.map(s=>`<div class="item" onclick="slotSheet('${c.id}','${s.id}')"><span class="dot"></span><div class="t"><div class="tt">${DAYS[s.day]} · <b>${fa(s.start)}</b>${s.end?'–'+fa(s.end):''}</div><div class="meta" style="margin:0">${s.room?'📍 '+esc(s.room):''}</div></div></div>`).join(''):'<div class="meta">زمان کلاس رو اضافه کن تا جلسه‌ها، تقویم و یادآوری شب قبل ساخته بشن.</div>'}</div>
+  <div class="block"><h3>استاد</h3>
+   <div class="g2"><div><label style="margin-top:0">ایمیل</label><input type="email" class="ltr" value="${esc(c.email)}" placeholder="prof@uni.ac.ir" onchange="setC('${c.id}','email',this.value)"></div><div><label style="margin-top:0">ساعت حضور</label><input type="text" value="${esc(c.office)}" placeholder="یکشنبه ۱۰–۱۲، اتاق ۳۱۲" onchange="setC('${c.id}','office',this.value)"></div></div>
+   ${c.email?`<div class="meta"><a href="mailto:${esc(c.email)}">✉ ارسال ایمیل</a></div>`:''}
+   <label>نکات استاد (روی چی تأکید داره، چی تو امتحان میاد)</label><textarea onchange="setC('${c.id}','profNotes',this.value)" placeholder="مثلاً: سوالات از تمرین‌های آخر فصل‌ها، حضور و غیاب دقیق…">${esc(c.profNotes)}</textarea></div>`}
+function setC(id,k,v){const c=course(id);c[k]=v;put('courses',c);save()}
+function addTopic(id){const v=$('#nt').value.trim();if(!v)return;const c=course(id);c.topics.push({id:uid(),title:v,done:false});put('courses',c);save();render();setTimeout(()=>$('#nt').focus(),0)}
+function togTopic(id,tid){const c=course(id),t=c.topics.find(t=>t.id===tid);t.done=!t.done;put('courses',c);save();render()}
+function delTopic(id,tid){const c=course(id);c.topics=c.topics.filter(t=>t.id!==tid);put('courses',c);save();render()}
+function courseSess(c){const oc=occurrences(c.id),td=TODAY(),ab=absCount(c.id),mx=+c.maxAbs||3;
+  if(!ofC('slots',c.id).length)return`<div class="block"><div class="meta">اول از «نمای کلی» زمان کلاس در هفته رو اضافه کن؛ جلسه‌ها خودکار از شروع ترم (${jLabel(settings().termStart)}) ساخته می‌شن.</div><button class="btn small" style="margin-top:10px" onclick="slotSheet('${c.id}')">+ زمان کلاس</button></div>`;
+  const up=oc.filter(o=>o.iso>=td).slice(0,2),past=oc.filter(o=>o.iso<td).reverse();
+  const row=o=>{const r=sessionRec(o.key)||{},tk=live('tasks').filter(t=>t.sessionId===o.key);
+    return`<div class="item ${o.off?'cancel':''}" onclick="sessionSheet('${c.id}','${o.key}')"><div class="ficon" style="${r.absent?'background:#FBE3E3;color:var(--bad)':o.iso<=td&&!o.off?'background:#E3F4EC;color:var(--ok)':''}">${o.off?'—':fa(o.n)}</div><div class="t"><div class="tt">${jLabel(o.iso,true)} · ${fa(o.slot.start)}${o.off?' · تشکیل نشد':r.absent?' · غایب':''}</div><div class="meta" style="margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.taught?esc(r.taught):o.iso<=td&&!o.off?'<span style="opacity:.7">چی درس داده شد؟ بزن تا ثبت کنی</span>':''}${tk.length?' · 📌 '+fa(tk.length)+' تکلیف':''}</div></div><span class="x">‹</span></div>`};
+  return`<div class="block"><div class="row"><div><div class="meta" style="margin:0">غیبت‌ها</div><div class="bignum" style="color:${ab>=mx?'var(--bad)':ab>=mx-1&&ab?'var(--warn)':'var(--ink)'}">${fa(ab)} <span style="font-size:16px;color:var(--muted)">از ${fa(mx)}</span></div></div><div class="meta" style="text-align:left">غایب بودی؟ روی جلسه بزن<br>و «غایب» رو انتخاب کن.</div></div><div class="bar"><i style="width:${Math.min(100,ab/mx*100)}%;background:${ab>=mx?'var(--bad)':ab>=mx-1?'var(--warn)':'var(--ok)'}"></i></div></div>
+   ${up.length?`<div class="sec">پیش رو</div><div class="block" style="margin-top:0">${up.map(row).join('')}</div>`:''}
+   <div class="sec">جلسه‌های گذشته</div><div class="block" style="margin-top:0">${past.length?past.map(row).join(''):'<div class="meta">هنوز جلسه‌ای برگزار نشده.</div>'}</div>`}
+function courseTasks(c){const l=live('tasks').filter(t=>t.courseId===c.id).sort((a,b)=>(a.done-b.done)||byDue(a,b));
+  return`<div class="block"><h3>کارها و تکالیف <button class="btn small" onclick="taskSheet(null,{courseId:'${c.id}'})">+ کار</button></h3>${l.length?l.map(t=>taskRow(t,false)).join(''):'<div class="meta">کاری ثبت نشده.</div>'}</div>`}
+function courseFiles(c){return`<div class="block"><h3>جزوه‌ها <button class="btn small" onclick="pickFile('${c.id}','')">+ آپلود</button></h3><input type="search" id="fq" placeholder="جستجو در جزوه‌ها…" oninput="drawFiles('${c.id}')"><div id="flist"><div class="meta">…</div></div></div>
+  <div class="block"><h3>یادداشت کلی درس</h3><textarea style="min-height:140px" placeholder="خلاصه، فرمول‌ها، منابع…" onchange="setC('${c.id}','note',this.value)">${esc(c.note)}</textarea></div>`}
+
+// ===== Files =====
+let FL={};
+const ext=f=>{const m=(f.name.match(/\.([a-z0-9]{1,4})$/i)||[])[1];return m?m.toUpperCase():(f.mime||'').startsWith('image')?'IMG':'FILE'};
+async function loadFiles(cid){if(LOCAL)FL[cid]=(FILES[cid]||[]);else{try{FL[cid]=await (await fetch('/api/files?c='+cid)).json()}catch(e){FL[cid]=[]}}drawFiles(cid)}
+function groupLabel(cid,g){if(!g)return'عمومی';const o=occurrences(cid).find(o=>o.iso===g);return(o&&o.n?'جلسه '+fa(o.n)+' · ':'')+jLabel(g,true)}
+function drawFiles(cid,target){const el=target||$('#flist');if(!el)return;const q=($('#fq')&&$('#fq').value||'').trim().toLowerCase();let fs=(FL[cid]||[]).map((f,i)=>({...f,i}));
+  if(q)fs=fs.filter(f=>f.name.toLowerCase().includes(q));if(target)fs=fs.filter(f=>(f.group||'')===target.dataset.g);
+  if(!fs.length){el.innerHTML='<div class="meta">'+(q?'چیزی پیدا نشد.':'هنوز جزوه‌ای نیست. PDF، عکس، Word، پاورپوینت.')+'</div>';return}
+  const gs=[...new Set(fs.map(f=>f.group||''))].sort().reverse();
+  el.innerHTML=gs.map(g=>`${target?'':`<div class="sec" style="margin:12px 0 2px">${groupLabel(cid,g)}</div>`}${fs.filter(f=>(f.group||'')===g).map(f=>`<div class="item"><div class="ficon">${esc(ext(f))}</div><div class="t" onclick="openFile('${cid}',${f.i})"><div class="tt ltr" style="text-align:right">${esc(f.name)}</div></div><button class="x" onclick="delFile('${cid}',${f.i})">×</button></div>`).join('')}`).join('')}
+let pendingGroup='';
+function pickFile(cid,g){pendingGroup=g;if(PHONE)Android.pickFile(cid);else if(WEB){const i=document.createElement('input');i.type='file';i.multiple=true;i.onchange=async()=>{const l=FILES[cid]=FILES[cid]||[];for(const f of i.files){const key=uid();try{await idbPut(key,f);l.push({name:f.name,mime:f.type,group:g,key})}catch(e){toast('ذخیره نشد: '+f.name)}}persist();toast('اضافه شد');refreshFiles(cid)};i.click()}else{const i=document.createElement('input');i.type='file';i.multiple=true;i.onchange=async()=>{for(const f of i.files){await fetch(`/api/upload?c=${cid}&g=${g}&n=${encodeURIComponent(f.name)}`,{method:'POST',body:f})}toast('آپلود شد');refreshFiles(cid)};i.click()}}
+function refreshFiles(cid){loadFiles(cid).then(()=>{const s=$('#sfl');if(s)drawFiles(cid,s)})}
+window.onFilePicked=o=>{const l=FILES[o.course]=FILES[o.course]||[];if(!l.some(f=>f.uri===o.uri&&f.group===pendingGroup))l.push({name:o.name,uri:o.uri,mime:o.mime,group:pendingGroup});persist();refreshFiles(o.course)};
+function openFile(cid,i){const f=FL[cid][i];if(PHONE)Android.openFile(f.uri,f.mime);else if(WEB)idbGet(f.key).then(b=>{if(!b)return toast('فایل پیدا نشد');const a=document.createElement('a');a.href=URL.createObjectURL(b);a.target='_blank';if(!/pdf|image|text/.test(b.type))a.download=f.name;a.click()});else fetch(`/api/open?c=${cid}&g=${f.group||''}&n=${encodeURIComponent(f.name)}`,{method:'POST'})}
+async function delFile(cid,i){const f=FL[cid][i];if(!confirm('«'+f.name+'» حذف بشه؟'))return;
+  if(WEB){FILES[cid]=(FILES[cid]||[]).filter(x=>x.key!==f.key);idbDel(f.key);persist()}else if(PHONE){FILES[cid]=(FILES[cid]||[]).filter(x=>!(x.uri===f.uri&&(x.group||'')===(f.group||'')));Android.releaseFile(f.uri);persist()}else await fetch(`/api/delfile?c=${cid}&g=${f.group||''}&n=${encodeURIComponent(f.name)}`,{method:'POST'});refreshFiles(cid)}
+
+// ===== Sheets =====
+function openSheet(html){closeSheet();const bg=document.createElement('div');bg.className='sheet-bg';bg.id='sheet';bg.onclick=e=>{if(e.target===bg)closeSheet()};bg.innerHTML=`<div class="sheet">${html}</div>`;document.body.appendChild(bg);sheetOpen=true}
+function closeSheet(){const s=$('#sheet');s&&s.remove();sheetOpen=false}
+function dateFields(p,iso,optional){const t=today(),tj=g2j(t.getFullYear(),t.getMonth()+1,t.getDate());const[y,m,d]=iso?jOf(iso):tj;const ys=[tj[0]-1,tj[0],tj[0]+1];
+  return`${optional?`<label class="cb"><input type="checkbox" id="${p}-has" ${iso?'checked':''} onchange="$('#${p}-w').classList.toggle('hidden',!this.checked)"> تاریخ مشخص</label>`:''}
+  <div id="${p}-w" class="g3 ${optional&&!iso?'hidden':''}"><select id="${p}-d">${Array.from({length:31},(_,i)=>`<option value="${i+1}" ${i+1==d?'selected':''}>${fa(i+1)}</option>`).join('')}</select><select id="${p}-m">${MONTHS.map((x,i)=>`<option value="${i+1}" ${i+1==m?'selected':''}>${x}</option>`).join('')}</select><select id="${p}-y">${ys.map(x=>`<option value="${x}" ${x==y?'selected':''}>${fa(x)}</option>`).join('')}</select></div>`}
+function readDate(p){const h=$('#'+p+'-has');if(h&&!h.checked)return'';return isoJ(+$('#'+p+'-y').value,+$('#'+p+'-m').value,+$('#'+p+'-d').value)}
+function setDate(p,iso){const[y,m,d]=jOf(iso);$('#'+p+'-y').value=y;$('#'+p+'-m').value=m;$('#'+p+'-d').value=d;const h=$('#'+p+'-has');if(h){h.checked=true;$('#'+p+'-w').classList.remove('hidden')}}
+const courseSelect=(id,sel,none)=>`<select id="${id}">${none?'<option value="">— بدون درس —</option>':''}${live('courses').map(c=>`<option value="${c.id}" ${c.id===sel?'selected':''}>${esc(c.name)}</option>`).join('')}</select>`;
+
+function courseSheet(id){const c=id?course(id):{name:'',prof:'',units:'',maxAbs:3,color:COLORS[live('courses').length%COLORS.length]};
+  openSheet(`<h2>${id?'ویرایش درس':'درس جدید'}</h2>
+  <label>نام درس</label><input type="text" id="c-name" value="${esc(c.name)}" placeholder="مثلاً سیستم‌عامل">
+  <label>نام استاد</label><input type="text" id="c-prof" value="${esc(c.prof)}" placeholder="دکتر …">
+  <div class="g2"><div><label>تعداد واحد</label><input type="number" id="c-units" min="0" max="6" value="${esc(c.units)}"></div><div><label>سقف غیبت مجاز</label><input type="number" id="c-max" min="1" max="10" value="${+c.maxAbs||3}"></div></div>
+  <label>رنگ</label><div class="colors" data-v="${c.color}">${COLORS.map(x=>`<button style="background:${x}" class="${x===c.color?'on':''}" onclick="document.querySelectorAll('.colors button').forEach(b=>b.classList.remove('on'));this.classList.add('on');this.parentNode.dataset.v='${x}'"></button>`).join('')}<input type="color" title="رنگ دلخواه" value="${c.color}" oninput="document.querySelectorAll('.colors button').forEach(b=>b.classList.remove('on'));this.parentNode.dataset.v=this.value"></div>
+  ${id?'':'<div class="meta" style="margin-top:12px">بعد از ساخت، زمان کلاس و امتحان‌ها رو از صفحه‌ی درس اضافه کن.</div>'}
+  <div class="actions">${id?`<button class="btn danger" onclick="delCourse('${id}')">حذف</button>`:''}<button class="btn ghost" onclick="closeSheet()">انصراف</button><button class="btn" onclick="saveCourse('${id||''}')">ذخیره</button></div>`);if(!id)setTimeout(()=>$('#c-name').focus(),60)}
+function saveCourse(id){const name=$('#c-name').value.trim();if(!name)return $('#c-name').focus();
+  const c=id?course(id):{topics:[],note:'',mastery:0,email:'',office:'',profNotes:''};Object.assign(c,{name,prof:$('#c-prof').value.trim(),units:$('#c-units').value,maxAbs:+$('#c-max').value||3,color:$('.colors').dataset.v});
+  put('courses',c);save();closeSheet();if(!id)go('course',c.id,{tab:'over'});else render()}
+function delCourse(id){if(!confirm('کل این درس با جلسه‌ها و کارهاش حذف بشه؟'))return;del('courses',id);['exams','slots','sessions','tasks'].forEach(k=>ofC(k,id).forEach(r=>del(k,r.id)));save();closeSheet();stack=[];view={page:'home'};render()}
+
+function examSheet(cid,id,iso){const e=id?get('exams',id):{type:'پایان‌ترم',date:iso||'',time:'',place:''};
+  openSheet(`<h2>${id?'ویرایش امتحان':'امتحان جدید'}</h2><label>درس</label>${courseSelect('e-c',cid||(e.courseId))}
+  <label>نوع</label><div class="seg" id="e-t" data-v="${e.type}">${EXAM_TYPES.map(t=>`<button class="${t===e.type?'on':''}" onclick="this.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on'));this.classList.add('on');this.parentNode.dataset.v='${t}'">${t}</button>`).join('')}</div>
+  <label>تاریخ</label>${dateFields('e-d',e.date||TODAY())}
+  <div class="g2"><div><label>ساعت</label><input type="time" id="e-time" value="${esc(e.time)}"></div><div><label>محل</label><input type="text" id="e-place" value="${esc(e.place)}" placeholder="سالن ۱"></div></div>
+  <div class="actions">${id?`<button class="btn danger" onclick="del('exams','${id}');save();closeSheet();render()">حذف</button>`:''}<button class="btn ghost" onclick="closeSheet()">انصراف</button><button class="btn" onclick="saveExam('${id||''}')">ذخیره</button></div>`)}
+function saveExam(id){const cid=$('#e-c').value;if(!cid)return toast('اول یک درس بساز');const e=id?get('exams',id):{};Object.assign(e,{courseId:cid,type:$('#e-t').dataset.v,date:readDate('e-d'),time:$('#e-time').value,place:$('#e-place').value.trim()});put('exams',e);save();closeSheet();render()}
+
+function slotSheet(cid,id){if(!live('courses').length)return toast('اول یک درس بساز');const s=id?get('slots',id):{day:pday(today()),start:'08:00',end:'09:30',room:''};
+  openSheet(`<h2>${id?'ویرایش زمان کلاس':'زمان کلاس'}</h2><label>درس</label>${courseSelect('s-c',cid||s.courseId)}
+  <label>روز هفته</label><select id="s-day">${DAYS.map((d,i)=>`<option value="${i}" ${i==s.day?'selected':''}>${d}</option>`).join('')}</select>
+  <div class="g2"><div><label>شروع</label><input type="time" id="s-st" value="${s.start}"></div><div><label>پایان</label><input type="time" id="s-en" value="${s.end||''}"></div></div>
+  <label>کلاس / ساختمان</label><input type="text" id="s-room" value="${esc(s.room)}" placeholder="کلاس ۲۰۴، دانشکده کامپیوتر">
+  <div class="actions">${id?`<button class="btn danger" onclick="del('slots','${id}');save();closeSheet();render()">حذف</button>`:''}<button class="btn ghost" onclick="closeSheet()">انصراف</button><button class="btn" onclick="saveSlot('${id||''}')">ذخیره</button></div>`)}
+function saveSlot(id){const s=id?get('slots',id):{};Object.assign(s,{courseId:$('#s-c').value,day:+$('#s-day').value,start:$('#s-st').value||'08:00',end:$('#s-en').value,room:$('#s-room').value.trim()});put('slots',s);save();closeSheet();render()}
+
+function taskSheet(id,pre){const t=id?get('tasks',id):{title:'',courseId:'',due:'',note:'',...(pre||{})};
+  openSheet(`<h2>${id?'ویرایش کار':'کار / تکلیف جدید'}</h2><label>عنوان</label><input type="text" id="t-title" value="${esc(t.title)}" placeholder="مثلاً حل تمرین‌های فصل ۲">
+  <label>درس</label>${courseSelect('t-c',t.courseId,true)}
+  <label>مهلت</label>${dateFields('t-d',t.due,true)}<div class="addrow"><button class="btn small ghost" onclick="dueNext()">جلسه‌ی بعدی این درس</button><button class="btn small ghost" onclick="setDate('t-d',isoOf(addD(today(),1)))">فردا</button><button class="btn small ghost" onclick="setDate('t-d',isoOf(addD(today(),7)))">هفته‌ی بعد</button></div>
+  <label>توضیح</label><textarea id="t-note">${esc(t.note)}</textarea>
+  <div class="actions">${id?`<button class="btn danger" onclick="del('tasks','${id}');save();closeSheet();render()">حذف</button>`:''}<button class="btn ghost" onclick="closeSheet()">انصراف</button><button class="btn" onclick="saveTask('${id||''}','${t.sessionId||''}')">ذخیره</button></div>`);if(!id)setTimeout(()=>$('#t-title').focus(),60)}
+function dueNext(){const cid=$('#t-c').value;if(!cid)return toast('اول درس رو انتخاب کن');const n=nextClassAfterToday(cid);n?setDate('t-d',n):toast('برای این درس زمان کلاس ثبت نشده')}
+function nextClassAfterToday(cid){for(let i=1;i<20;i++){const iso=isoOf(addD(today(),i));if(classesOn(iso,cid).some(x=>!x.off))return iso}return null}
+function saveTask(id,sid){const title=$('#t-title').value.trim();if(!title)return $('#t-title').focus();const t=id?get('tasks',id):{done:false};Object.assign(t,{title,courseId:$('#t-c').value,due:readDate('t-d'),note:$('#t-note').value.trim()});if(sid)t.sessionId=sid;put('tasks',t);save();closeSheet();render()}
+
+function sessionSheet(cid,key){const o=occurrences(cid).find(o=>o.key===key);if(!o)return;const c=course(cid),r=sessionRec(key)||{id:key,courseId:cid,date:o.iso,absent:false,taught:'',note:'',topicIds:[]};
+  const hw=live('tasks').filter(t=>t.sessionId===key),past=o.iso<=TODAY();
+  openSheet(`<h2>${o.n?'جلسه '+fa(o.n)+' · ':''}${esc(c.name)}</h2><div class="meta">${jLabel(o.iso,true)} · ${fa(o.slot.start)}${o.slot.end?'–'+fa(o.slot.end):''}${o.slot.room?' · 📍 '+esc(o.slot.room):''}</div>
+  ${o.off?`<div class="block"><div class="meta">این جلسه تشکیل نمی‌شه.</div><button class="btn small ghost" style="margin-top:8px" onclick="toggleOff('${o.iso}','${cid}');closeSheet()">برگردون</button></div>`:`
+  <label>حضور</label><div class="seg" id="ss-a" data-v="${r.absent?1:0}"><button class="${!r.absent?'on':''}" onclick="segSet(this,0)">✓ حاضر بودم</button><button class="${r.absent?'on bad':''}" onclick="segSet(this,1)">✗ غایب بودم</button></div>
+  <label>چی درس داده شد؟</label><textarea id="ss-t" placeholder="${past?'مثلاً: الگوریتم‌های زمان‌بندی، Round Robin':'بعد از کلاس پر کن'}">${esc(r.taught)}</textarea>
+  ${c.topics.length?`<label>سرفصل‌هایی که این جلسه درس داده شد (تیک بخوره، تو سرفصل‌ها هم انجام‌شده می‌شه)</label><div class="block" style="margin-top:0;padding:4px 14px">${c.topics.map(t=>`<label class="cb" style="margin:8px 0"><input type="checkbox" class="ss-tp" value="${t.id}" ${(r.topicIds||[]).includes(t.id)?'checked':''}> ${esc(t.title)}</label>`).join('')}</div>`:''}
+  <label>تکلیف این جلسه</label><div class="block" style="margin-top:0">${hw.map(t=>taskRow(t,false)).join('')}<div class="addrow"><input type="text" id="ss-hw" placeholder="تکلیف جدید (مهلت: جلسه‌ی بعد)"><button class="btn small" onclick="addHw('${cid}','${key}','${o.iso}')">افزودن</button></div></div>
+  <label>یادداشت جلسه</label><textarea id="ss-n">${esc(r.note)}</textarea>
+  <label>جزوه / عکس تخته‌ی این جلسه</label><div class="block" style="margin-top:0"><div id="sfl" data-g="${o.iso}"></div><button class="btn small ghost" style="margin-top:8px" onclick="pickFile('${cid}','${o.iso}')">+ افزودن فایل</button></div>`}
+  <div class="actions">${o.off?'':`<button class="btn ghost" onclick="toggleOff('${o.iso}','${cid}');closeSheet()">تشکیل نشد</button>`}<button class="btn ghost" onclick="closeSheet()">بستن</button>${o.off?'':`<button class="btn" onclick="saveSession('${cid}','${key}','${o.iso}')">ذخیره</button>`}</div>`);
+  if(!o.off)loadFiles(cid).then(()=>drawFiles(cid,$('#sfl')))}
+function segSet(b,v){b.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('on','bad'));b.classList.add('on');if(v)b.classList.add('bad');b.parentNode.dataset.v=v}
+function saveSession(cid,key,iso,keep){const r=sessionRec(key)||{id:key,courseId:cid,date:iso};const tids=[...document.querySelectorAll('.ss-tp:checked')].map(x=>x.value);
+  Object.assign(r,{absent:$('#ss-a').dataset.v==='1',taught:$('#ss-t').value.trim(),note:$('#ss-n').value.trim(),topicIds:tids});put('sessions',r);
+  if(tids.length){const c=course(cid);let ch=false;c.topics.forEach(t=>{if(tids.includes(t.id)&&!t.done){t.done=true;ch=true}});if(ch)put('courses',c)}
+  save();if(!keep){closeSheet();render()}}
+function addHw(cid,key,iso){const v=$('#ss-hw').value.trim();if(!v)return;saveSession(cid,key,iso,true);let due='';for(let i=1;i<20;i++){const d=isoOf(addD(dOf(iso),i));if(classesOn(d,cid).some(x=>!x.off)){due=d;break}}
+  put('tasks',{title:v,courseId:cid,due,done:false,note:'',sessionId:key});save();sessionSheet(cid,key)}
+
+function syncSheet(){openSheet(`<h2>اتصال دستگاه‌ها</h2>
+  ${PHONE?`<div class="block"><h3>اتصال به لپ‌تاپ <span class="pill ${SYNC.state==='ok'?'p-ok':SYNC.state==='off'?'p-mute':'p-bad'}">${syncLabel()}</span></h3>
+   <div class="meta">PIN برنامه‌ی ویندوز رو اینجا بزن. با هات‌اسپات گوشی: فقط اپ رو باز نگه دار، لپ‌تاپ خودش ظرف چند ثانیه وصل می‌شه.</div>
+   <div class="g2"><div><label>PIN</label><input type="number" id="sy-pin" class="ltr" value="${esc(SYNC.pin)}" placeholder="1234"></div><div><label>IP لپ‌تاپ (اختیاری)</label><input type="text" id="sy-ip" class="ltr" value="${esc(SYNC.ip)}" placeholder="192.168.1.5"></div></div>
+   <button class="btn" style="width:100%;margin-top:12px" onclick="SYNC.pin=$('#sy-pin').value.trim();SYNC.ip=$('#sy-ip').value.trim();saveSyncCfg();closeSheet();doSync()">ذخیره و اتصال</button>
+   ${SYNC.err&&SYNC.state!=='ok'?`<div class="meta ltr" style="text-align:left;margin-top:8px">${esc(SYNC.err)}</div>`:''}
+   <div class="meta" style="margin-top:8px">پیدا نمی‌کنه؟ ۱) VPN گوشی رو خاموش کن ۲) گوشی و لپ‌تاپ روی یک Wi-Fi (یا لپ‌تاپ به هات‌اسپات گوشی) ۳) در لپ‌تاپ: ☰ ← اتصال دستگاه‌ها ← «باز کردن فایروال» ۴) فقط IP بخش Wi-Fi لپ‌تاپ رو وارد کن، یا خالی بذار تا خودش بگرده.</div></div>`
+  :`<div class="block"><h3>اتصال گوشی</h3><div class="meta">در اپ گوشی: ☰ ← اتصال دستگاه‌ها ← این PIN رو وارد کن. گوشی و لپ‌تاپ باید روی یک Wi-Fi باشن.</div><div class="pin" id="pinbox">…</div><div class="meta" id="ipbox"></div><div class="meta" id="phbox"></div>
+   <div class="row" style="margin-top:10px"><span class="meta" id="fwbox">فایروال: …</span><button class="btn small" onclick="fixFw()">باز کردن فایروال</button></div><div class="meta" id="dirbox"></div><button class="btn small ghost" style="margin-top:8px" onclick="fetch('/api/openfolder',{method:'POST'})">باز کردن پوشه‌ی داده‌ها</button></div>`}
+<div class="actions"><button class="btn ghost" onclick="closeSheet()">بستن</button></div>`);
+  if(!PHONE)fetch('/api/info').then(r=>r.json()).then(i=>{$('#pinbox').textContent=i.pin;$('#fwbox').innerHTML='فایروال: '+(i.fw?'<b style="color:var(--ok)">باز ✓</b>':'<b style="color:var(--bad)">بسته — گوشی وصل نمی‌شه</b>');$('#phbox').textContent=i.lastPhone?'آخرین همگام‌سازی گوشی: '+new Date(i.lastPhone).toLocaleTimeString('fa-IR'):'گوشی هنوز وصل نشده';$('#ipbox').innerHTML='IP لپ‌تاپ: <span class="ltr">'+i.ips.join(' , ')+'</span>';$('#dirbox').innerHTML='داده‌ها: <span class="ltr">'+esc(i.dir)+'</span>'})}
+function setTheme(t){try{localStorage.setItem('darsyar_theme',t)}catch(e){}applyTheme();settingsSheet()}
+function applyTheme(){let t='system';try{t=localStorage.getItem('darsyar_theme')||'system'}catch(e){}const dark=t==='dark'||(t==='system'&&(PHONE?Android.isDark&&Android.isDark():matchMedia('(prefers-color-scheme: dark)').matches));document.documentElement.dataset.theme=dark?'dark':'light'}
+function settingsSheet(){const st=settings();let th='system';try{th=localStorage.getItem('darsyar_theme')||'system'}catch(e){}
+  openSheet(`<h2>تنظیمات</h2>
+  <div class="block"><h3>ظاهر</h3><div class="seg">${[['light','☀ روشن'],['dark','☾ تیره'],['system','خودکار']].map(([k,t])=>`<button class="${th===k?'on':''}" onclick="setTheme('${k}')">${t}</button>`).join('')}</div></div>
+  <div class="block"><h3>ترم</h3><label style="margin-top:0">تاریخ شروع ترم (برای شماره‌گذاری جلسه‌ها)</label>${dateFields('st',st.termStart)}
+   <label>ساعت یادآوری شب قبل</label><select id="st-h">${[19,20,21,22,23].map(h=>`<option value="${h}" ${h==st.notifyHour?'selected':''}>${fa(h)}:۰۰</option>`).join('')}</select>
+   <button class="btn" style="width:100%;margin-top:12px" onclick="const s=settings();s.termStart=readDate('st');s.notifyHour=+$('#st-h').value;put('meta',s);save();closeSheet();render()">ذخیره</button></div>
+  <div class="block"><h3>ترم جدید</h3><div class="meta">درس‌های فعلی بایگانی می‌شن (پاک نمی‌شن) و می‌تونی کلاس‌های ترم بعد رو وارد کنی.</div><button class="btn ghost" style="width:100%;margin-top:10px" onclick="closeSheet();newTerm()">شروع ترم جدید</button></div>`)}
+async function fixFw(){toast('پنجره‌ی تأیید ویندوز رو «Yes» بزن');await fetch('/api/firewall',{method:'POST'});setTimeout(()=>{if(sheetOpen)syncSheet()},6000)}
+let FW=true;
+// ===== Boot =====
+applyTheme();try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
+(async function(){if(WEB){loadPhone();settings();render();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}}else if(PHONE){loadPhone();settings();render();scheduleNotifs();doSync();setInterval(doSync,45000)}else{try{await loadDesktop()}catch(e){S=norm({})}settings();try{FW=(await (await fetch('/api/info')).json()).fw}catch(e){}render();setInterval(pollDesktop,3000)}
+  setInterval(()=>{if(!busy()&&view.page!=='course')render()},60000)})();
+</script>
+</body>
+</html>
