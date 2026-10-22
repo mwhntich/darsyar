@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#1F3A5F">
+<meta name="theme-color" content="#0D1A13">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,16 +18,16 @@
 @font-face{font-family:Vazirmatn;src:url(fonts/Vazirmatn-Regular.woff2) format('woff2');font-weight:400}
 @font-face{font-family:Vazirmatn;src:url(fonts/Vazirmatn-Medium.woff2) format('woff2');font-weight:500}
 @font-face{font-family:Vazirmatn;src:url(fonts/Vazirmatn-Bold.woff2) format('woff2');font-weight:700}
-:root{--ink:#1B2433;--muted:#6B7686;--bg:#F3F5F8;--card:#fff;--line:#E6E9EF;--soft:#EEF1F5;--seg:#E7EBF1;--brand:#1F3A5F;--head:#1F3A5F;--accent:#F2A93B;--ok:#2E9E6B;--warn:#E08A1E;--bad:#D64545;color-scheme:light}
-:root[data-theme=dark]{--ink:#E6EAF0;--muted:#97A2B3;--bg:#0E141D;--card:#18202C;--line:#283243;--soft:#222C3B;--seg:#141B25;--brand:#5B8CD6;--head:#16263D;color-scheme:dark}
+:root{--ink:#14211A;--muted:#66746C;--bg:#F2F6F3;--card:#fff;--line:#E2E9E4;--soft:#ECF2EE;--seg:#E3EAE5;--brand:#15803D;--head:#0D1A13;--accent:#22C55E;--ok:#16A34A;--warn:#E08A1E;--bad:#DC4A4A;--amber:#F5A524;color-scheme:light}
+:root[data-theme=dark]{--ink:#EEF3EF;--muted:#8A918D;--bg:#0B0D0C;--card:#141816;--line:#232A26;--soft:#1C221F;--seg:#101412;--brand:#22C55E;--head:#0F1712;color-scheme:dark}
 [data-theme=dark] .p-ok{background:#16362A}[data-theme=dark] .p-warn{background:#3A2A12}[data-theme=dark] .p-bad{background:#3B1A1C}
-[data-theme=dark] .btn:not(.ghost):not(.danger){background:#2B4C7A}[data-theme=dark] .btn.danger{background:#3B1A1C}
+[data-theme=dark] .btn:not(.ghost):not(.danger){background:#22C55E;color:#04210F}[data-theme=dark] .btn.danger{background:#3B1A1C}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,sans-serif;font-size:15px}
 body{max-width:620px;margin:0 auto;min-height:100vh}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
-header{background:var(--head);color:#fff;padding:calc(16px + env(safe-area-inset-top)) 16px 52px;position:relative}
+header{background:radial-gradient(520px 240px at 92% -30%,rgba(34,197,94,.42),rgba(34,197,94,0) 70%),var(--head);color:#fff;padding:calc(16px + env(safe-area-inset-top)) 16px 52px;position:relative}
 header h1{margin:0;font-size:20px;font-weight:700}
 header .sub{opacity:.75;font-size:13px;margin-top:2px}
 .hact{position:absolute;left:12px;top:calc(14px + env(safe-area-inset-top));display:flex;gap:6px;align-items:center}
@@ -54,7 +54,7 @@ main{padding:0 16px 150px}
 .hero{background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 70%,#000));color:#fff;border-radius:16px;padding:16px;margin-bottom:10px}
 .hero .meta{color:rgba(255,255,255,.8)}
 .hero .big{font-size:22px;font-weight:700;margin:2px 0}
-.fab{position:fixed;left:max(18px,calc(50vw - 292px));bottom:82px;width:56px;height:56px;border-radius:18px;border:0;background:var(--accent);color:#1B2433;font-size:30px;box-shadow:0 6px 16px rgba(242,169,59,.45);z-index:5}
+.fab{position:fixed;left:max(18px,calc(50vw - 292px));bottom:82px;width:56px;height:56px;border-radius:18px;border:0;background:var(--accent);color:#04210F;font-size:30px;box-shadow:0 8px 20px rgba(34,197,94,.38);z-index:5}
 nav.tabs{position:fixed;bottom:0;left:0;right:0;max-width:620px;margin:0 auto;background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);z-index:6;padding-bottom:env(safe-area-inset-bottom)}
 nav.tabs button{border:0;background:none;padding:9px 0 8px;font-size:11.5px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
 nav.tabs button b{font-size:19px;font-weight:400;line-height:1}
@@ -123,8 +123,23 @@ label.cb{display:flex;gap:8px;align-items:center;color:var(--ink)}
 .mhead b{font-size:17px}
 .tag{font-size:11px;padding:2px 7px;border-radius:6px;background:#EEF1F5;color:var(--muted)}
 .cancel{opacity:.55}.cancel .tt{text-decoration:line-through}
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1B2433;color:#fff;padding:10px 16px;border-radius:12px;font-size:13.5px;z-index:30}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#0D1A13;color:#fff;padding:10px 16px;border-radius:12px;font-size:13.5px;z-index:30}
 a{color:var(--brand)}
+.logo{display:inline-flex;align-items:center;gap:9px}.logo svg{width:30px;height:30px;flex:none}
+.abtn{position:relative;color:#fff}.abtn.none{opacity:.45}
+.abtn .n{position:absolute;top:-5px;left:-5px;min-width:18px;height:18px;border-radius:9px;background:var(--bad);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 4px;line-height:1}
+.apop{position:fixed;top:calc(64px + env(safe-area-inset-top));left:12px;right:12px;max-width:596px;margin:0 auto;z-index:35;background:var(--card);color:var(--ink);border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.28);overflow:hidden;transition:transform .45s cubic-bezier(.5,0,.2,1),opacity .45s;animation:apin .32s cubic-bezier(.2,.8,.2,1)}
+@keyframes apin{from{transform:translateY(-24px);opacity:0}}
+.apop .in{display:flex;gap:12px;align-items:flex-start;padding:14px 14px 12px;border-right:5px solid var(--lv)}
+.apop .ic{width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,var(--lv) 16%,transparent);color:var(--lv);display:grid;place-items:center;flex:none;font-weight:900;font-size:18px}
+.apop .tb{height:4px;background:var(--soft)}.apop .tb i{display:block;height:100%;background:var(--lv);margin-right:0;margin-left:auto}
+.arow{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}.arow:first-of-type{border-top:0}
+.arow .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:none;font-weight:900}
+.tour-ov{position:fixed;inset:0;z-index:45}
+.tour-spot{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(4,10,7,.66);transition:all .32s cubic-bezier(.3,.7,.2,1);pointer-events:none}
+.tour-card{position:fixed;left:16px;right:16px;max-width:420px;margin:0 auto;background:var(--card);color:var(--ink);border-radius:18px;padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.35);transition:top .32s cubic-bezier(.3,.7,.2,1)}
+.tour-card h4{margin:0 0 6px;font-size:17px}.tour-card p{margin:0;font-size:14px;line-height:1.8;color:var(--muted)}
+.tour-dots{display:flex;gap:5px;flex:1}.tour-dots i{width:7px;height:7px;border-radius:4px;background:var(--line)}.tour-dots i.on{width:18px;background:var(--accent)}
 .drawer-bg{position:fixed;inset:0;background:rgba(10,15,25,.5);z-index:25;display:flex;justify-content:flex-start}
 .drawer{background:var(--bg);width:min(320px,84vw);height:100%;padding:0 0 20px;overflow:auto;animation:din .18s ease-out}
 @keyframes din{from{transform:translateX(100%)}to{transform:none}}
@@ -169,7 +184,7 @@ const mlen=(jy,jm)=>jm<=6?31:jm<=11?30:(daysLeft(isoJ(jy+1,1,1))-daysLeft(isoJ(j
 
 // ===== Data =====
 const KEYS=['courses','exams','slots','sessions','tasks','offdays','meta'];
-const COLORS=['#1F3A5F','#2E9E6B','#7A4FD1','#D64545','#E08A1E','#1E8FB5','#C2417F','#5B6B7F','#0F766E','#4F46E5','#B45309','#BE123C','#15803D','#9333EA','#0369A1','#A16207','#DB2777','#334155','#65A30D','#0891B2'];
+const COLORS=['#16A34A','#1F3A5F','#7A4FD1','#D64545','#E08A1E','#1E8FB5','#C2417F','#5B6B7F','#0F766E','#4F46E5','#B45309','#BE123C','#15803D','#9333EA','#0369A1','#A16207','#DB2777','#334155','#65A30D','#0891B2'];
 const EXAM_TYPES=['میان‌ترم','پایان‌ترم','کوییز','پروژه','دیگر'];
 const PHONE=!!window.Android,WEB=!PHONE&&!!window.DARSYAR_WEB,LOCAL=PHONE||WEB;
 let S={},FILES={};
@@ -206,7 +221,7 @@ const topicPct=c=>c.topics&&c.topics.length?Math.round(100*c.topics.filter(t=>t.
 // ===== Persistence + sync =====
 let SYNC={ip:'',pin:'',state:'off'},dv='';
 function persist(){localStorage.setItem('darsyar2',JSON.stringify(S));localStorage.setItem('darsyar_files',JSON.stringify(FILES))}
-function save(){if(PHONE){persist();scheduleNotifs();queueSync()}else if(WEB)persist();else pushDesktop()}
+let alertT;function save(){clearTimeout(alertT);alertT=setTimeout(checkAlerts,900);if(PHONE){persist();scheduleNotifs();queueSync()}else if(WEB)persist();else pushDesktop()}
 function loadPhone(){let s=null;try{s=JSON.parse(localStorage.getItem('darsyar2'))}catch(e){}
   try{FILES=JSON.parse(localStorage.getItem('darsyar_files')||'{}')}catch(e){FILES={}}
   if(!s){s=norm({});let old=null;try{old=JSON.parse(localStorage.getItem('darsyar'))}catch(e){}
@@ -225,11 +240,11 @@ async function tryHost(ip){try{const r=await nhttp('http://'+ip+':8765/api/sync?
     if(r.status===401){setSync('badpin');return true}if(r.status!==200){SYNC.err=ip+' → '+(r.status||'')+' '+r.text.slice(0,120);return false}
     S=merge(S,norm(JSON.parse(r.text)));persist();scheduleNotifs();SYNC.ip=ip;SYNC.err='';SYNC.last=Date.now();saveSyncCfg();setSync('ok');if(!busy())render();return true}
   catch(e){SYNC.err=String(e);return false}}
-async function doSync(){if(!PHONE)return;if(!SYNC.pin){setSync('off');return}if(SYNC.state==='ok'&&Date.now()-(SYNC.last||0)<20000)return;setSync('busy');if(SYNC.ip&&await tryHost(SYNC.ip))return;Android.discover()}
+async function doSync(){if(!PHONE||NOSYNC)return;if(!SYNC.pin){setSync('off');return}if(SYNC.state==='ok'&&Date.now()-(SYNC.last||0)<20000)return;setSync('busy');if(SYNC.ip&&await tryHost(SYNC.ip))return;Android.discover()}
 window.onDiscovered=async ip=>{if(!ip||!(await tryHost(ip))){if(!(SYNC.state==='ok'&&Date.now()-(SYNC.last||0)<20000))setSync('fail')}};
 window.onPeerSync=(id,pin,body)=>{if(!SYNC.pin||pin!==SYNC.pin){Android.reply(id,'BADPIN');setSync('badpin');return}
   try{S=merge(S,norm(JSON.parse(body)));persist();scheduleNotifs();SYNC.err='';SYNC.last=Date.now();setSync('ok');Android.reply(id,JSON.stringify(S));if(!busy())render()}catch(e){Android.reply(id,'')}};
-window.onAppResume=()=>{applyTheme();doSync();if(!busy())render()};
+window.onAppResume=()=>{applyTheme();setTimeout(checkAlerts,800);doSync();if(!busy())render()};
 async function loadDesktop(){const r=await fetch('/api/data');S=norm(await r.json());dv=r.headers.get('X-Ver')||''}
 let pushT;function pushDesktop(){clearTimeout(pushT);pushT=setTimeout(async()=>{try{const r=await fetch('/api/sync',{method:'POST',body:JSON.stringify(S)});if(!r.ok)throw 0;dv=r.headers.get('X-Ver')||dv;S=merge(S,norm(await r.json()))}catch(e){toast('ذخیره نشد؛ برنامه‌ی ویندوز بسته شده؟')}},250)}
 async function pollDesktop(){if(document.hidden)return;try{const v=await (await fetch('/api/version')).text();if(v!==dv){const r=await fetch('/api/data');dv=r.headers.get('X-Ver')||v;S=merge(S,norm(await r.json()));if(!busy())render()}}catch(e){}}
@@ -246,6 +261,8 @@ function scheduleNotifs(){if(!PHONE||!Android.schedule)return;const out=[],now=N
     live('exams').filter(e=>e.date===iso&&course(e.courseId)).forEach(e=>{const at=addD(d,-3).getTime()+20*3600e3;if(at>now)out.push({id:hash('e3'+e.id+iso),at,title:'۳ روز تا امتحان '+course(e.courseId).name,text:e.type+' · '+jLabel(iso,true)+(e.time?' ساعت '+fa(e.time):'')})})}
   Android.schedule(JSON.stringify(out.slice(0,80)))}
 
+const LOGO=(tile='#22C55E',g='#fff')=>`<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="${tile}"/><g fill="none" stroke="${g}" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round"><path d="M50 33 C43 28 32 27 23 29 V71 C32 69 43 70 50 75 V33"/><path d="M50 75 C57 70 67 69 77 71 V57"/><path d="M50 33 C55 29 60 28 64 28"/><path d="M61 47 L68 54 L81 33"/><path d="M85 25 L88 21" stroke-width="4.6"/></g></svg>`;
+const NOSYNC=!!window.DARSYAR_NOSYNC;
 // ===== Navigation =====
 let view={page:'home'},stack=[],sheetOpen=false,calSel=TODAY(),calM=null,taskSeg='open';
 function go(page,id,extra){stack.push(view);view={page,id,...extra};render();scrollTo(0,0)}
@@ -257,7 +274,7 @@ function render(){const a=$('#app');const y=scrollY;
   scrollTo(0,y);afterRender()}
 function navBar(){const b=(p,ic,t)=>`<button class="${view.page===p?'on':''}" onclick="tab('${p}')"><b>${ic}</b>${t}</button>`;return`<nav class="tabs">${b('home','⌂','خانه')}${b('cal','▦','تقویم')}${b('week','☰','برنامه هفتگی')}${b('tasks','✓','کارها')}</nav>`}
 function afterRender(){if(view.page==='course'&&view.tab==='files')loadFiles(view.id)}
-function headerBar(title,sub){return`<header><h1>${title}</h1><div class="sub">${sub}</div><div class="hact">${PHONE?`<button id="sdot" class="sync ${SYNC.state}" onclick="syncSheet()"><i></i><span>${syncLabel()}</span></button>`:''}<button class="ib" style="font-size:18px" onclick="openMenu()">☰</button></div></header>`}
+function headerBar(title,sub){const al=alerts();return`<header><h1>${title}</h1><div class="sub">${sub}</div><div class="hact">${PHONE&&!NOSYNC?`<button id="sdot" class="sync ${SYNC.state}" onclick="syncSheet()"><i></i><span>${syncLabel()}</span></button>`:''}<button id="abtn" class="ib abtn ${al.length?'':'none'}" onclick="alertsSheet()" aria-label="هشدارها"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:block"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>${al.length?`<span class="n">${fa(al.length)}</span>`:''}</button><button id="mbtn" class="ib" style="font-size:18px" onclick="openMenu()">☰</button></div></header>`}
 
 // ===== Home =====
 function courseCard(c){const nx=nextClass(c.id),ex=nextExam(c.id),ab=absCount(c.id),mx=+c.maxAbs||3,tp=topicPct(c);
@@ -274,15 +291,13 @@ function renderHome(){const cs=live('courses').sort((a,b)=>{const ea=nextExam(a.
   const nx=nextClass(),td=classesOn(TODAY()),ot=openTasks().sort(byDue),ex=live('exams').filter(e=>course(e.courseId)&&daysLeft(e.date)>=0).sort((a,b)=>a.date<b.date?-1:1)[0];
   const warn=cs.filter(c=>absCount(c.id)>=(+c.maxAbs||3)-1&&absCount(c.id)>0);
   const t=today(),[jy,jm,jd]=g2j(t.getFullYear(),t.getMonth()+1,t.getDate());
-  return headerBar('📘 درس‌یار',DAYS[pday(t)]+' '+fa(jd)+' '+MONTHS[jm-1]+' '+fa(jy))+(!PHONE&&!FW?`<div class="card" style="--c:var(--bad);margin:46px 16px -30px;position:relative;z-index:2" onclick="syncSheet()"><b>فایروال ویندوز اتصال گوشی رو بسته</b><div class="meta">بزن ← «باز کردن فایروال»</div></div>`:'')+`
+  return headerBar(`<span class="logo">${LOGO()}درس‌یار</span>`,DAYS[pday(t)]+' '+fa(jd)+' '+MONTHS[jm-1]+' '+fa(jy))+(!PHONE&&!FW?`<div class="card" style="--c:var(--bad);margin:46px 16px -30px;position:relative;z-index:2" onclick="syncSheet()"><b>فایروال ویندوز اتصال گوشی رو بسته</b><div class="meta">بزن ← «باز کردن فایروال»</div></div>`:'')+`
   <div class="stats"><button class="stat" onclick="tab('week')"><b>${fa(td.filter(x=>!x.off).length)}</b><span>کلاس امروز</span></button><button class="stat" onclick="tab('tasks')"><b>${fa(ot.length)}</b><span>کار باز</span></button><button class="stat" onclick="${ex?`go('course','${ex.courseId}',{tab:'over'})`:''}"><b>${ex?fa(daysLeft(ex.date)):'—'}</b><span>${ex?'روز تا '+esc(course(ex.courseId).name):'امتحان بعدی'}</span></button></div>
   <main>
   ${nx?`<div class="hero" style="--c:${nx.c.color};margin-top:14px" onclick="go('course','${nx.c.id}',{tab:'sess'})"><div class="meta">کلاس بعدی</div><div class="big">${esc(nx.c.name)}</div><div>${countdown(nx)}${nx.slot.room?' · 📍 '+esc(nx.slot.room):''}</div>${openTasks(nx.c.id).filter(t=>t.due===nx.iso).map(t=>`<div class="meta">• ${esc(t.title)}</div>`).join('')}</div>`:''}
   ${WEB&&!isStandalone()&&!localStorage.getItem('darsyar_noinst')?`<div class="card" style="--c:var(--accent);margin-top:14px" onclick="installSheet()"><div class="row"><div><div class="name">📲 درس‌یار رو نصب کن</div><div class="meta">مثل یک اپ روی صفحه‌ی گوشی، آفلاین و بدون پاک شدن اطلاعات.</div></div><button class="x" onclick="event.stopPropagation();localStorage.setItem('darsyar_noinst',1);render()">×</button></div></div>`:''}
-  ${semesterOver()?`<div class="hero" style="--c:#2E9E6B;margin-top:14px"><div class="big">ترم تموم شد 🎉</div><div class="meta">همه‌ی امتحان‌ها برگزار شدن. خسته نباشی!</div><button class="btn small" style="background:rgba(255,255,255,.2);margin-top:10px" onclick="newTerm()">شروع ترم جدید</button></div>`:''}
-  ${examClashes().map(([iso,l])=>`<div class="card" style="--c:var(--bad)" onclick="calSel='${iso}';calM=null;tab('cal')"><div class="name">⚠ ${fa(l.length)} امتحان در یک روز</div><div class="meta">${jLabel(iso,true)}: ${l.map(e=>esc(course(e.courseId).name)+(e.time?' ('+fa(e.time)+')':'')).join(' و ')}${daysLeft(iso)>0?' — از الان برای هر دو برنامه بریز.':''}</div></div>`).join('')}
+  ${semesterOver()?`<div class="hero" style="--c:#16A34A;margin-top:14px"><div class="big">ترم تموم شد 🎉</div><div class="meta">همه‌ی امتحان‌ها برگزار شدن. خسته نباشی!</div><button class="btn small" style="background:rgba(255,255,255,.2);margin-top:10px" onclick="newTerm()">شروع ترم جدید</button></div>`:''}
   ${(()=>{const sg=suggestions();return sg.length?`<div class="sec">پیشنهاد مطالعه</div><div class="block" style="margin-top:0">${sg.map(x=>`<div class="sug" onclick="go('course','${x.c.id}',{tab:'over'})"><span class="e">${x.e}</span><div><b>${esc(x.c.name)}</b><div class="meta" style="margin:0">${x.t}</div></div></div>`).join('')}</div>`:''})()}
-  ${warn.map(c=>`<div class="card" style="--c:var(--bad)" onclick="go('course','${c.id}',{tab:'sess'})"><div class="name">⚠ غیبت ${esc(c.name)}: ${fa(absCount(c.id))} از ${fa(+c.maxAbs||3)}</div><div class="meta">${absCount(c.id)>=(+c.maxAbs||3)?'به سقف غیبت رسیدی!':'فقط یک غیبت دیگه جا داری.'}</div></div>`).join('')}
   ${ot.length?`<div class="sec">کارهای نزدیک <button class="btn small ghost" onclick="tab('tasks')">همه</button></div><div class="block" style="margin-top:0">${ot.slice(0,5).map(t=>taskRow(t)).join('')}</div>`:''}
   ${cs.length?'<div class="sec">درس‌ها</div>'+cs.map(courseCard).join(''):`<div class="empty"><b>هنوز درسی اضافه نکردی</b>با دکمه‌ی + اولین درست رو بساز.</div>`}
   </main><button class="fab" onclick="courseSheet()">+</button>`}
@@ -336,14 +351,65 @@ function backupSheet(){openSheet(`<h2>💾 پشتیبان‌گیری</h2><div cl
   <div class="actions"><button class="btn ghost" onclick="closeSheet()">بستن</button></div>`)}
 function restoreBackup(){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=async()=>{try{const j=JSON.parse(await i.files[0].text());if(!j.darsyarBackup||!j.data)throw 0;S=merge(S,norm(j.data));save();closeSheet();render();toast('بازیابی شد ✓')}catch(e){toast('فایل پشتیبان معتبر نیست')}};i.click()}
 
+// ===== Alerts =====
+const LV={bad:'#DC4A4A',warn:'#E08A1E'};
+function alerts(){const out=[];
+  examClashes().forEach(([iso,l])=>out.push({id:'c_'+iso+'_'+l.map(e=>e.id).sort().join('.'),lv:'bad',ic:'!',t:fa(l.length)+' امتحان در یک روز',d:jLabel(iso,true)+': '+l.map(e=>esc(course(e.courseId).name)).join(' و ')+(daysLeft(iso)>0?' — از الان برای همه برنامه بریز.':''),go:`calSel='${iso}';calM=null;tab('cal')`}));
+  live('courses').forEach(c=>{const ab=absCount(c.id),mx=+c.maxAbs||3;
+    if(ab&&ab>=mx-1)out.push({id:'a_'+c.id+'_'+ab,lv:ab>=mx?'bad':'warn',ic:'!',t:'غیبت '+esc(c.name)+': '+fa(ab)+' از '+fa(mx),d:ab>=mx?'به سقف غیبت رسیدی!':'فقط یک غیبت دیگه جا داری.',go:`go('course','${c.id}',{tab:'sess'})`});
+    const ex=nextExam(c.id);if(ex){const d=daysLeft(ex.date),m=+c.mastery||0;if(d<=3&&m<70)out.push({id:'u_'+ex.id+'_'+d,lv:'warn',ic:'!',t:(d===0?'امروز':fa(d)+' روز تا')+' امتحان '+esc(c.name),d:'تسلطت '+fa(m)+'٪ه؛ وقت مرور جدیه.',go:`go('course','${c.id}',{tab:'over'})`})}});
+  const od=openTasks().filter(t=>t.due&&daysLeft(t.due)<0);if(od.length)out.push({id:'o_'+od.map(t=>t.id).sort().join('.'),lv:'warn',ic:'!',t:fa(od.length)+' کار عقب افتاده',d:od.slice(0,2).map(t=>esc(t.title)).join('، ')+(od.length>2?' و …':''),go:"tab('tasks')"});
+  return out}
+function alertsSheet(){const al=alerts();markSeen(al);openSheet(`<h2>هشدارها</h2>${al.length?`<div class="block">${al.map((a,i)=>`<div class="arow" onclick="closeSheet();${a.go}"><div class="ic" style="background:color-mix(in srgb,${LV[a.lv]} 15%,transparent);color:${LV[a.lv]}">!</div><div style="flex:1"><b>${a.t}</b><div class="meta" style="margin:2px 0 0">${a.d}</div></div><span class="x">‹</span></div>`).join('')}</div>`:'<div class="empty"><b>هشداری نداری ✓</b>همه‌چیز مرتبه.</div>'}<div class="actions"><button class="btn ghost" onclick="closeSheet()">بستن</button></div>`)}
+function seenSet(){try{return new Set(JSON.parse(localStorage.getItem('darsyar_seen')||'[]'))}catch(e){return new Set()}}
+function markSeen(al){try{const s=seenSet();al.forEach(a=>s.add(a.id));localStorage.setItem('darsyar_seen',JSON.stringify([...s].slice(-200)))}catch(e){}}
+let popT=null,popEl=null;
+function checkAlerts(){if(touring||sheetOpen||popEl||view.page==='course')return;const al=alerts(),s=seenSet(),nw=al.filter(a=>!s.has(a.id));if(!nw.length)return;
+  const a=nw[0],D=6500;popEl=document.createElement('div');popEl.className='apop';popEl.style.setProperty('--lv',LV[a.lv]);
+  popEl.innerHTML=`<div class="in"><div class="ic">!</div><div style="flex:1;min-width:0"><b style="font-size:15px">${a.t}</b><div class="meta" style="margin:2px 0 0">${a.d}${nw.length>1?`<br><span style="color:var(--brand)">+ ${fa(nw.length-1)} هشدار دیگه</span>`:''}</div></div><button class="x" aria-label="بستن">×</button></div><div class="tb"><i></i></div>`;
+  document.body.appendChild(popEl);const bar=popEl.querySelector('.tb i');bar.style.width='100%';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{bar.style.transition=`width ${D}ms linear`;bar.style.width='0%'}));
+  popEl.querySelector('.x').onclick=e=>{e.stopPropagation();dockPop(nw)};
+  popEl.onclick=()=>{dockPop(nw,true);alertsSheet()};
+  popT=setTimeout(()=>dockPop(nw),D)}
+function dockPop(nw,instant){clearTimeout(popT);markSeen(nw);const el=popEl;popEl=null;if(!el)return;const ib=$('#abtn');
+  if(instant||!ib){el.remove();return}
+  const a=el.getBoundingClientRect(),b=ib.getBoundingClientRect();el.style.transformOrigin='center';
+  el.style.transform=`translate(${b.left+b.width/2-(a.left+a.width/2)}px,${b.top+b.height/2-(a.top+a.height/2)}px) scale(.06)`;el.style.opacity='0';
+  setTimeout(()=>el.remove(),480)}
+
+// ===== Tour =====
+let touring=false,tourI=0;
+const TOUR=[
+ {t:'به درس‌یار خوش اومدی 👋',d:'یه دستیار ساده برای کلاس‌ها، امتحان‌ها، غیبت‌ها و جزوه‌هات. بیا یه دور سریع بزنیم.'},
+ {el:'#mbtn',t:'منو',d:'سریع‌ترین شروع: «ورود کلاس‌ها با هوش مصنوعی» با یک عکس از انتخاب واحدت. افزودن به تقویم، پشتیبان‌گیری و تنظیمات هم اینجاست.'},
+ {el:'.fab',t:'افزودن درس',d:'یا درس‌ها رو دستی اضافه کن. بعد داخل صفحه‌ی هر درس، زمان کلاس و امتحان رو وارد کن.'},
+ {el:'.stats',t:'خلاصه‌ی امروز',d:'کلاس‌های امروز، کارهای باز و روزهای مونده تا امتحان بعدی؛ روی هرکدوم بزنی می‌ری همون بخش.'},
+ {el:'nav.tabs',t:'بخش‌های اصلی',d:'تقویم شمسی، برنامه‌ی هفتگی و لیست کارها و تکالیف.'},
+ {el:'#abtn',t:'هشدارها',d:'دو امتحان در یک روز، نزدیک شدن به سقف غیبت یا امتحانِ نزدیک؟ اول یه پیام کوتاه می‌بینی، بعد همه اینجا می‌مونن.'},
+ {t:'آماده‌ای ✨',d:'هر وقت خواستی این راهنما رو از منو ☰ ← «راهنمای برنامه» دوباره ببین.'}];
+function startTour(force){if(!force){try{if(localStorage.getItem('darsyar_tour'))return}catch(e){return}}closeSheet();if(view.page!=='home')tab('home');scrollTo(0,0);touring=true;tourI=0;
+  const ov=document.createElement('div');ov.className='tour-ov';ov.id='tour';ov.innerHTML='<div class="tour-spot"></div><div class="tour-card"></div>';document.body.appendChild(ov);tourStep()}
+function tourStep(){const ov=$('#tour');if(!ov)return;const st=TOUR[tourI],sp=ov.querySelector('.tour-spot'),cd=ov.querySelector('.tour-card');
+  const el=st.el&&document.querySelector(st.el);const r=el?el.getBoundingClientRect():null;const P=8;
+  if(r){Object.assign(sp.style,{left:r.left-P+'px',top:r.top-P+'px',width:r.width+2*P+'px',height:r.height+2*P+'px'})}else Object.assign(sp.style,{left:'50%',top:'45%',width:'0px',height:'0px'});
+  const last=tourI===TOUR.length-1;
+  cd.innerHTML=`<h4>${st.t}</h4><p>${st.d}</p><div class="row" style="margin-top:14px"><div class="tour-dots">${TOUR.map((_,i)=>`<i class="${i===tourI?'on':''}"></i>`).join('')}</div>${last?'':'<button class="btn small ghost" onclick="endTour()">رد کردن</button>'}<button class="btn small" onclick="${last?'endTour()':'tourI++;tourStep()'}">${tourI===0?'شروع':last?'بزن بریم':'بعدی'}</button></div>`;
+  const h=cd.offsetHeight,vh=innerHeight;let top;
+  if(!r)top=(vh-h)/2;else if(r.bottom+P+12+h<vh-10)top=r.bottom+P+12;else top=Math.max(10,r.top-P-12-h);
+  cd.style.top=top+'px'}
+function endTour(){touring=false;try{localStorage.setItem('darsyar_tour','1')}catch(e){}const t=$('#tour');t&&t.remove();setTimeout(checkAlerts,500)}
+addEventListener('resize',()=>{if(touring)tourStep()});
+
 // ===== Menu =====
 function openMenu(){closeSheet();const bg=document.createElement('div');bg.className='drawer-bg';bg.id='sheet';bg.onclick=e=>{if(e.target===bg)closeSheet()};
   const it=(ic,t,sub,fn)=>`<button class="mi" onclick="closeSheet();${fn}"><i>${ic}</i><span>${t}${sub?`<small>${sub}</small>`:''}</span></button>`;
-  bg.innerHTML=`<div class="drawer"><div class="dh"><b>📘 درس‌یار</b><span style="opacity:.75;font-size:13px">دستیار دانشگاهی تو</span></div>
-   ${WEB?(isStandalone()?'':it('📲','نصب روی گوشی','آیفون و اندروید','installSheet()')):it('🔗','اتصال دستگاه‌ها',PHONE?syncLabel():'گوشی ↔ لپ‌تاپ','syncSheet()')}
+  bg.innerHTML=`<div class="drawer"><div class="dh"><b class="logo" style="margin-bottom:4px">${LOGO()}درس‌یار</b><span style="opacity:.75;font-size:13px">دستیار دانشگاهی تو</span></div>
+   ${WEB?(isStandalone()?'':it('📲','نصب روی گوشی','آیفون و اندروید','installSheet()')):NOSYNC?'':it('🔗','اتصال دستگاه‌ها',PHONE?syncLabel():'گوشی ↔ لپ‌تاپ','syncSheet()')}
    ${it('✨','ورود کلاس‌ها با هوش مصنوعی','از عکس انتخاب واحد','importSheet()')}
    ${it('📅','افزودن به تقویم گوشی','کلاس‌ها و امتحان‌ها با یادآوری شب قبل','exportICS()')}
    ${it('💾','پشتیبان‌گیری','ذخیره و بازیابی اطلاعات','backupSheet()')}
+   ${it('🧭','راهنمای برنامه','یه دور سریع با بخش‌های اپ','startTour(true)')}
    ${it('⚙','تنظیمات','حالت تیره/روشن، ترم، یادآوری','settingsSheet()')}
    ${it('👤','ارتباط با توسعه‌دهنده','Mahan Kenarroudi','devSheet()')}
    <div class="meta" style="padding:14px 18px">نسخه ۳.۰</div></div>`;
@@ -602,7 +668,7 @@ async function fixFw(){toast('پنجره‌ی تأیید ویندوز رو «Yes
 let FW=true;
 // ===== Boot =====
 applyTheme();try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
-(async function(){if(WEB){loadPhone();settings();render();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}}else if(PHONE){loadPhone();settings();render();scheduleNotifs();doSync();setInterval(doSync,45000)}else{try{await loadDesktop()}catch(e){S=norm({})}settings();try{FW=(await (await fetch('/api/info')).json()).fw}catch(e){}render();setInterval(pollDesktop,3000)}
+(async function(){setTimeout(()=>{startTour();if(!touring)checkAlerts()},700);if(WEB){loadPhone();settings();render();try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}}else if(PHONE){loadPhone();settings();render();scheduleNotifs();doSync();setInterval(doSync,45000)}else{try{await loadDesktop()}catch(e){S=norm({})}settings();try{FW=(await (await fetch('/api/info')).json()).fw}catch(e){}render();setInterval(pollDesktop,3000)}
   setInterval(()=>{if(!busy()&&view.page!=='course')render()},60000)})();
 </script>
 </body>
