@@ -296,7 +296,7 @@ function suggestions(){const out=[],clash=new Set(examClashes().flatMap(([,l])=>
 
 // ================= Persistence =================
 function persist(){LS.set('darsyar2',JSON.stringify(S));LS.set('darsyar_files',JSON.stringify(FILES))}
-let alertT;function save(){persist();if(PHONE)scheduleNotifs();clearTimeout(alertT);alertT=setTimeout(checkAlerts,900)}
+let alertT;function save(){persist();if(PHONE){scheduleNotifs();pushWidget()}clearTimeout(alertT);alertT=setTimeout(checkAlerts,900)}
 function load(){let s=null;try{s=JSON.parse(LS.get('darsyar2','null'))}catch(e){}
   try{FILES=JSON.parse(LS.get('darsyar_files','{}'))||{}}catch(e){FILES={}}
   if(!s){s={};let old=null;try{old=JSON.parse(LS.get('darsyar','null'))}catch(e){}
@@ -315,6 +315,21 @@ function scheduleNotifs(){if(!PHONE||!Android.schedule)return;const out=[],now=N
     if(lines.length){const at=addD(d,-1).getTime()+H*3600e3;if(at>now)out.push({id:hash('n'+iso),at,title:'فردا، '+jLabel(iso,true)+(cl.length?' • '+fa(cl.length)+' کلاس':''),text:lines.join('\n')})}
     live('exams').filter(e=>e.date===iso&&course(e.courseId)).forEach(e=>{const at=addD(d,-3).getTime()+20*3600e3;if(at>now)out.push({id:hash('e3'+e.id+iso),at,title:'۳ روز تا امتحان '+course(e.courseId).name,text:e.type+' • '+jLabel(iso,true)+(e.time?' ساعت '+fa(e.time):'')})})}
   Android.schedule(JSON.stringify(out.slice(0,80)))}
+
+// ================= Home-screen widgets (Android) =================
+function widgetSnap(){const t0=TODAY(),t8=isoOf(addD(today(),8)),cs=live('courses'),cls=[],wk=Date.now()-7*864e5;
+  cs.forEach(c=>occurrences(c.id).forEach(o=>{if(o.off||o.iso<t0||o.iso>t8)return;cls.push({d:o.iso,s:o.slot.start,e:o.slot.end||'',n:c.name,r:o.slot.room||'',c:c.color,id:c.id,k:o.n||0,wd:DAYS[pday(dOf(o.iso))]})}));
+  cls.sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:hm(a.s)-hm(b.s));
+  const exams=live('exams').filter(e=>course(e.courseId)&&e.date>=t0).sort((a,b)=>(a.date+(a.time||''))<(b.date+(b.time||''))?-1:1).slice(0,6).map(e=>{const c=course(e.courseId),tp=c.topics||[],nt=tp.find(x=>!x.done);
+    return{d:e.date,t:e.time||'',p:e.place||'',ty:e.type,n:c.name,c:c.color,id:c.id,m:mastery(c),td:tp.filter(x=>x.done).length,tt:tp.length,nt:nt?nt.title:'',l:jLabel(e.date,true)}});
+  const tasks=openTasks().sort(byDue).slice(0,12).map(t=>{const c=course(t.courseId);return{id:t.id,t:t.title,d:t.due||'',n:c?c.name:'',c:c?c.color:'',wd:t.due?DAYS[pday(dOf(t.due))]:'',jl:t.due?jLabel(t.due):''}});
+  const abs=cs.map(c=>({n:c.name,id:c.id,a:absCount(c.id),m:+c.maxAbs||3})).filter(x=>x.a>0).sort((a,b)=>b.a/b.m-a.a/a.m);
+  const dn=live('tasks').filter(t=>t.done&&+t.u>Date.now()-15*864e5);
+  return{v:1,name:LS.get('darsyar_name',''),courses:cs.length,classes:cls,exams,tasks,abs,doneDays:[...new Set(dn.map(t=>isoOf(new Date(+t.u))))],weekDone:dn.filter(t=>+t.u>wk).length,anyDone:live('tasks').some(t=>t.done)}}
+let wT;function pushWidget(){if(!PHONE||!Android.widgetData)return;clearTimeout(wT);wT=setTimeout(()=>{try{Android.widgetData(JSON.stringify(widgetSnap()))}catch(e){}},300)}
+function applyWidgetDone(){if(!PHONE||!Android.widgetTake)return;let ids=[];try{ids=JSON.parse(Android.widgetTake()||'[]')}catch(e){}let ch=0;
+  ids.forEach(id=>{const t=get('tasks',String(id));if(t&&!t.done){t.done=true;put('tasks',t);ch++}});if(ch){save();refresh()}}
+window.onWidgetAction=a=>{a=String(a||'');if($('#tourov'))endTour();closeSheet();if(a==='import'){go('today');setTimeout(aiSheet,250)}else if(a==='task'){go('today');setTimeout(()=>taskSheet(),250)}else if(a.startsWith('course:'))openCourse(a.slice(7))};
 
 // ================= Course icons =================
 const KW=[['br',['برنامه','کامپایلر','الگوریتم','ساختمان داده','ساختمان‌داده','نرم‌افزار','نرم افزار','کامپیوتر','سیستم عامل','سیستم‌عامل','پایتون','جاوا']],['sine',['سیگنال','مخابرات','کنترل','پردازش']],
@@ -669,7 +684,7 @@ function menuSheet(){const it=(e,t,s,fn)=>`<button class="row" onclick="${fn}"><
 function settingsSheet(){const s=settings(),th=LS.get('darsyar_theme','system'),H=+s.notifyHour;
   openSheet(`<h3>تنظیمات</h3><label>ظاهر</label><div class="seg">${[['light','روشن'],['dark','تیره'],['system','خودکار']].map(([v,l])=>`<button type="button" class="${th===v?'on':''}" onclick="pick(this);LS.set('darsyar_theme','${v}');applyTheme()">${l}</button>`).join('')}</div>
   ${PHONE?`<label>یادآوری شب قبل</label><div class="chips">${[[20,'۲۰:۰۰'],[21,'۲۱:۰۰'],[22,'۲۲:۰۰'],[23,'۲۳:۰۰'],[0,'خاموش']].map(([v,l])=>`<button type="button" class="${H===v?'on':''}" onclick="pick(this);const s=settings();s.notifyHour=${v};put('meta',s);save()">${l}</button>`).join('')}</div>`:''}
-  <label for="nm">اسمت (برای سلام صفحه‌ی اول)</label><input class="in" id="nm" value="${esc(LS.get('darsyar_name',''))}" oninput="LS.set('darsyar_name',this.value.trim().slice(0,30))" enterkeyhint="done">
+  <label for="nm">اسمت (برای سلام صفحه‌ی اول)</label><input class="in" id="nm" value="${esc(LS.get('darsyar_name',''))}" oninput="LS.set('darsyar_name',this.value.trim().slice(0,30));pushWidget()" enterkeyhint="done">
   <label>شروع ترم (برای شماره‌گذاری جلسه‌ها)</label>${datePicker('tsp',s.termStart,false)}
   <button class="btn press" onclick="const s=settings();s.termStart=DP.tsp.sel||s.termStart;put('meta',s);save();closeSheet();refresh();toast('ذخیره شد ✓')">ذخیره</button>
   <div id="nterm"><button class="btn danger sm press" onclick="newTermSheet()">شروع ترم جدید</button></div>`)}
@@ -710,7 +725,7 @@ function tour(i){closeSheet();let ov=$('#tourov');if(!ov){ov=document.createElem
   if(r)Object.assign(sp.style,{left:r.left-ap.left-6+'px',top:r.top-ap.top-6+'px',width:r.width+12+'px',height:r.height+12+'px'});else Object.assign(sp.style,{left:'50%',top:'40%',width:'0px',height:'0px'});
   const last=i===TOUR.length-1;
   cd.innerHTML=`<h4>${s.t}</h4><p>${s.d}</p>${s.name?`<input class="in" id="tnm" style="margin-top:12px" placeholder="مثلاً سارا (اختیاری)" value="${esc(LS.get('darsyar_name',''))}" enterkeyhint="next">`:''}
-   <div class="tfoot"><div class="tdots">${TOUR.map((_,j)=>`<i class="${j===i?'on':''}"></i>`).join('')}</div>${last?'':`<button class="sbtn s press" onclick="endTour()">رد کردن</button>`}<button class="sbtn g press" onclick="${s.name?"LS.set('darsyar_name',($('#tnm').value||'').trim().slice(0,30));todayS();":''}${last?'endTour()':`tour(${i+1})`}">${last?'شروع':'بعدی'}</button></div>`;
+   <div class="tfoot"><div class="tdots">${TOUR.map((_,j)=>`<i class="${j===i?'on':''}"></i>`).join('')}</div>${last?'':`<button class="sbtn s press" onclick="endTour()">رد کردن</button>`}<button class="sbtn g press" onclick="${s.name?"LS.set('darsyar_name',($('#tnm').value||'').trim().slice(0,30));todayS();pushWidget();":''}${last?'endTour()':`tour(${i+1})`}">${last?'شروع':'بعدی'}</button></div>`;
   const h=cd.offsetHeight,H=ap.height;const top=r?(r.top-ap.top>H/2?r.top-ap.top-h-20:r.bottom-ap.top+20):(H-h)/2;cd.style.top=Math.max(12,Math.min(H-h-12,top))+'px'}
 function endTour(){const ov=$('#tourov');if(ov)ov.remove();LS.set('darsyar_tour','1');refresh();setTimeout(checkAlerts,700)}
 
@@ -719,8 +734,8 @@ function applyTheme(){const t=LS.get('darsyar_theme','system');const dark=t==='d
   document.documentElement.dataset.theme=dark?'dark':'light';if(PHONE&&Android.bars)Android.bars(dark?'#0B0D0C':'#F4F6F3',!dark);
   const m=document.querySelector('meta[name=theme-color]');if(m)m.content=dark?'#0B0D0C':'#F4F6F3'}
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme)}catch(e){}
-window.onAppResume=()=>{applyTheme();if(!sheetOpen)refresh();setTimeout(checkAlerts,800)};
-applyTheme();load();settings();go('today');if(PHONE)scheduleNotifs();
+window.onAppResume=()=>{applyTheme();applyWidgetDone();pushWidget();if(!sheetOpen)refresh();setTimeout(checkAlerts,800)};
+applyTheme();load();settings();go('today');if(PHONE){scheduleNotifs();applyWidgetDone();pushWidget();const wa=Android.widgetAction?Android.widgetAction():'';if(wa){LS.set('darsyar_tour','1');setTimeout(()=>onWidgetAction(wa),400)}}
 if(WEB){try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}}
 setTimeout(()=>{if(!LS.get('darsyar_tour',''))tour(0);else checkAlerts()},500);
 setInterval(()=>{if(!sheetOpen&&!st.cur&&!$('#tourov')&&!['INPUT','TEXTAREA'].includes((document.activeElement||{}).tagName))refresh()},60000);
